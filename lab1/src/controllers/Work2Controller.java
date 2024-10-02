@@ -18,7 +18,7 @@ public class Work2Controller {
 
   @FXML
   private void yesButton(final ActionEvent event) {
-    final String text = textField.getText();
+    final var text = textField.getText();
     if (text.isEmpty()) {
       cencelButton(event);
       return;

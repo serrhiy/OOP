@@ -16,7 +16,7 @@ public class MenuController {
 
   private void makeModal(final String path, final String title) throws Exception {
     final var root = borderPane.getScene().getWindow();
-    final Parent gui = FXMLLoader.load(getClass().getResource(path));
+    final var gui = (Parent)FXMLLoader.load(getClass().getResource(path));
     final var scene = new Scene(gui);
     final var stage = new Stage();
     stage.setScene(scene);
