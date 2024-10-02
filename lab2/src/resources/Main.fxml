@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
   <top>
     <MenuBar BorderPane.alignment="CENTER">
       <menus>
         <Menu mnemonicParsing="false" text="Файл">
           <items>
-                  <MenuItem mnemonicParsing="false" text="Закрити" />
+              <MenuItem mnemonicParsing="false" text="Закрити" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Об'єкти">
+        <Menu mnemonicParsing="false" text="Об'єкти" fx:id="objectsMenu">
           <items>
-                  <RadioMenuItem mnemonicParsing="false" text="Прямокутник" />
-                  <RadioMenuItem mnemonicParsing="false" text="Еліпс" />
-                  <RadioMenuItem mnemonicParsing="false" text="Лінія" />
-                  <RadioMenuItem mnemonicParsing="false" text="Крапка" />
+            <RadioMenuItem mnemonicParsing="false" onAction="#rectangle" text="Прямокутник" />
+            <RadioMenuItem mnemonicParsing="false" onAction="#elipse" text="Еліпс" />
+            <RadioMenuItem mnemonicParsing="false" onAction="#line" text="Лінія" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Довідка">
@@ -31,4 +32,11 @@
       </menus>
     </MenuBar>
   </top>
+   <center>
+      <AnchorPane prefHeight="693.0" prefWidth="960.0" fx:id="anchorPane" BorderPane.alignment="CENTER">
+         <children>
+            
+         </children>
+      </AnchorPane>
+   </center>
 </BorderPane>
