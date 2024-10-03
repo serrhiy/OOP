@@ -21,6 +21,7 @@ public class LineEditor extends Editor {
 
   @Override
   public void onLeftButtonUp(double x, double y) {
+    super.deleteLastCanvas();
     final var line = new Line(startX, startY, x, y);
     final var context = super.createContext();
     context.setLineDashes(0);
