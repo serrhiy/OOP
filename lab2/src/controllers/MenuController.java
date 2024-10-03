@@ -32,26 +32,33 @@ public class MenuController {
     return event.getButton().equals(MouseButton.PRIMARY);
   }
 
-  private void processEvent(Editor editor) {
+  private void processEvent(Editor editor, final ActionEvent parentEvent) {
+    final var item = (RadioMenuItem)(parentEvent.getSource());
     anchorPane.setOnMousePressed((event) -> {
-      if (isPrimary(event)) editor.onLeftButtonDown(event.getX(), event.getY());
+      if (isPrimary(event) && item.isSelected()) {
+        editor.onLeftButtonDown(event.getX(), event.getY());
+      }
     });
     anchorPane.setOnMouseDragged((event) -> {
-      if (isPrimary(event)) editor.onMouseMove(event.getX(), event.getY());
+      if (isPrimary(event) && item.isSelected()) {
+        editor.onMouseMove(event.getX(), event.getY());
+      }
     });
     anchorPane.setOnMouseReleased((event) -> {
-      if (isPrimary(event)) editor.onLeftButtonUp(event.getX(), event.getY());
+      if (isPrimary(event) && item.isSelected()) {
+        editor.onLeftButtonUp(event.getX(), event.getY());
+      }
     });
   }
 
   @FXML
   private void rectangleCenter(final ActionEvent event) {
-    processEvent(new RectangleCenterEditor(anchorPane));
+    processEvent(new RectangleCenterEditor(anchorPane), event);
   }
 
   @FXML
   private void rectangleAngle(final ActionEvent event) {
-    processEvent(new RectangleAngleEditor(anchorPane));
+    processEvent(new RectangleAngleEditor(anchorPane), event);
   }
 
   @FXML
@@ -61,7 +68,7 @@ public class MenuController {
 
   @FXML
   private void line(final ActionEvent event) {
-    processEvent(new LineEditor(anchorPane));
+    processEvent(new LineEditor(anchorPane), event);
   }
 
   @FXML
