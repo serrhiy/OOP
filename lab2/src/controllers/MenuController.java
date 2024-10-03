@@ -1,6 +1,7 @@
 package controllers;
 
 import javafx.event.ActionEvent;
+// import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -11,6 +12,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.control.MenuItem;
 import editors.*;
 import javafx.application.Platform;
+import java.util.ArrayList;
+import java.util.List;
+import javafx.util.Pair;
 
 public class MenuController {
 
@@ -22,6 +26,8 @@ public class MenuController {
 
   @FXML
   private AnchorPane anchorPane;
+  
+  private final List<Pair<Menu, List<RadioMenuItem>>> menuItems = new ArrayList<>();
 
   private boolean isPrimary(final MouseEvent event) {
     return event.getButton().equals(MouseButton.PRIMARY);
@@ -40,8 +46,13 @@ public class MenuController {
   }
 
   @FXML
-  private void rectangle(final ActionEvent event) {
-    processEvent(new RectangleEditor(anchorPane));
+  private void rectangleCenter(final ActionEvent event) {
+    processEvent(new RectangleCenterEditor(anchorPane));
+  }
+
+  @FXML
+  private void rectangleAngle(final ActionEvent event) {
+    processEvent(new RectangleAngleEditor(anchorPane));
   }
 
   @FXML
@@ -55,21 +66,44 @@ public class MenuController {
   }
 
   @FXML
-  public void exit() {
+  private void exit() {
     Platform.exit();
   }
 
-  @FXML
-  public void initialize() {
-    objectsMenu.setOnAction((action) -> {
-      final var selected = (MenuItem)action.getTarget();
-      final var id = selected.getText();
-      for (final MenuItem item: objectsMenu.getItems()) {
-        final var radioItem = (RadioMenuItem)item;
-        final var isSelected = radioItem.isSelected();
-        final var equals = radioItem.getText().equals(id);
-        if (isSelected && !equals) radioItem.setSelected(false);
+  private void makeItemsUnique(final String text) {
+    for (final var pair: menuItems) {
+      final var items = pair.getValue();
+      for (final var item: items) {
+        final var selected = item.isSelected();
+        final var equals = item.getText().equals(text);
+        if (selected && !equals) item.setSelected(false);
       }
-    });
+    }
+  }
+
+  private void buildMenuItems(final Menu root) {
+    final List<RadioMenuItem> items = new ArrayList<>();
+    for (final MenuItem item: root.getItems()) {
+      if (item instanceof final Menu menu) {
+        buildMenuItems(menu);
+        continue;
+      }
+      items.addLast((RadioMenuItem)item);
+    }
+    menuItems.addLast(new Pair<Menu,List<RadioMenuItem>>(root, items));
+  }
+
+  @FXML
+  private void initialize() {
+    buildMenuItems(objectsMenu);
+    for (final var pair: menuItems) {
+      final var menu = pair.getKey();
+      menu.setOnAction((action) -> {
+        if (action.getTarget() instanceof Menu) return;
+        final var selected = (RadioMenuItem)action.getTarget();
+        final var text = selected.getText();
+        makeItemsUnique(text);
+      });
+    }
   }
 }
