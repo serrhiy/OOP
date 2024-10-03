@@ -18,13 +18,18 @@
         </Menu>
         <Menu fx:id="objectsMenu" mnemonicParsing="false" text="Об'єкти">
           <items>
-                  <Menu mnemonicParsing="false" text="Прямокутник">
-                    <items>
-                  <RadioMenuItem mnemonicParsing="false" onAction="#rectangleCenter" text="Від центру" />
-                        <RadioMenuItem mnemonicParsing="false" onAction="#rectangleAngle" text="Від краю" />
-                    </items>
-                  </Menu>
-            <RadioMenuItem mnemonicParsing="false" onAction="#elipse" text="Еліпс" />
+            <Menu mnemonicParsing="false" text="Прямокутник">
+              <items>
+                <RadioMenuItem mnemonicParsing="false" onAction="#rectangleCenter" text="Від центру" />
+                <RadioMenuItem mnemonicParsing="false" onAction="#rectangleAngle" text="Від краю" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Еліпс">
+              <items>
+                <RadioMenuItem mnemonicParsing="false" onAction="#elipseCenter" text="Від центру" />
+                <RadioMenuItem mnemonicParsing="false" onAction="#elipseAngle" text="Від краю" />
+              </items>
+            </Menu>
             <RadioMenuItem mnemonicParsing="false" onAction="#line" text="Лінія" />
           </items>
         </Menu>

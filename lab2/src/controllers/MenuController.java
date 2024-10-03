@@ -9,11 +9,11 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.MenuItem;
-import editors.*;
 import javafx.application.Platform;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Pair;
+import editors.*;
 
 public class MenuController {
 
@@ -32,7 +32,7 @@ public class MenuController {
     return event.getButton().equals(MouseButton.PRIMARY);
   }
 
-  private void processEvent(Editor editor, final ActionEvent parentEvent) {
+  private void processEvent(final Editor editor, final ActionEvent parentEvent) {
     final var item = (RadioMenuItem)(parentEvent.getSource());
     anchorPane.setOnMousePressed((event) -> {
       if (isPrimary(event) && item.isSelected()) {
@@ -62,8 +62,13 @@ public class MenuController {
   }
 
   @FXML
-  private void elipse(final ActionEvent event) {
+  private void elipseCenter(final ActionEvent event) {
+    processEvent(new ElipseCenterEditor(anchorPane), event);
+  }
 
+  @FXML
+  private void elipseAngle(final ActionEvent event) {
+    processEvent(new ElipseAngleEditor(anchorPane), event);
   }
 
   @FXML
