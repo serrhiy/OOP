@@ -16,5 +16,13 @@ public abstract class Shape {
     this(0, 0, 0, 0);
   }
 
+  public void setCoords(double[] coords) {
+    if (coords.length != 4) return;
+    x1 = coords[0];
+    y1 = coords[1];
+    x2 = coords[2];
+    y2 = coords[3];
+  }
+
   public abstract void draw(final GraphicsContext context);
 }

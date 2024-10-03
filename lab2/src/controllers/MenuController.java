@@ -34,11 +34,7 @@ public class MenuController {
       if (isPrimary(event)) editor.onMouseMove(event.getX(), event.getY());
     });
     anchorPane.setOnMouseReleased((event) -> {
-      if (isPrimary(event)) {
-        final double x = event.getX();
-        final double y = event.getY();
-        editor.onLeftButtonUp(x, y);
-      }
+      if (isPrimary(event)) editor.onLeftButtonUp(event.getX(), event.getY());
     });
   }
 
