@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
   <top>
     <MenuBar BorderPane.alignment="CENTER">
       <menus>
@@ -18,12 +18,12 @@
         </Menu>
         <Menu fx:id="objectsMenu" mnemonicParsing="false" text="Об'єкти">
           <items>
-            <Menu mnemonicParsing="false" text="Прямокутник">
-              <items>
-                <RadioMenuItem mnemonicParsing="false" onAction="#rectangleCenter" text="Від центру" />
-                <RadioMenuItem mnemonicParsing="false" onAction="#rectangleAngle" text="Від краю" />
-              </items>
-            </Menu>
+                  <Menu mnemonicParsing="false" text="Прямокутник">
+                    <items>
+                  <RadioMenuItem mnemonicParsing="false" onAction="#rectangleCenter" text="Від центру" />
+                        <RadioMenuItem mnemonicParsing="false" onAction="#rectangleAngle" text="Від краю" />
+                    </items>
+                  </Menu>
             <RadioMenuItem mnemonicParsing="false" onAction="#elipse" text="Еліпс" />
             <RadioMenuItem mnemonicParsing="false" onAction="#line" text="Лінія" />
           </items>
@@ -37,7 +37,7 @@
     </MenuBar>
   </top>
    <center>
-      <AnchorPane fx:id="anchorPane" prefHeight="693.0" prefWidth="960.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="anchorPane" BorderPane.alignment="CENTER">
          <children>
             
          </children>

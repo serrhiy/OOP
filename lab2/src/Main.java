@@ -25,6 +25,8 @@ public class Main extends Application {
         if (childers.size() > 0) pane.getChildren().removeLast();
       }
     });
+    stage.setWidth(960);
+    stage.setHeight(720);
     stage.setScene(scene);
     stage.setTitle(title);
     stage.show();

@@ -18,8 +18,8 @@ public abstract class Editor {
   }
 
   protected GraphicsContext createContext() {
-    final var width = pane.getPrefWidth();
-    final var height = pane.getPrefHeight();
+    final var width = pane.getWidth();
+    final var height = pane.getHeight();
     final var canvas = new Canvas(width, height);
     pane.getChildren().add(canvas);
     return canvas.getGraphicsContext2D();
