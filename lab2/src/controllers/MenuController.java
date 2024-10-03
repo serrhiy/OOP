@@ -10,6 +10,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.MenuItem;
 import editors.*;
+import javafx.application.Platform;
 
 public class MenuController {
 
@@ -51,6 +52,11 @@ public class MenuController {
   @FXML
   private void line(final ActionEvent event) {
     processEvent(new LineEditor(anchorPane));
+  }
+
+  @FXML
+  public void exit() {
+    Platform.exit();
   }
 
   @FXML
