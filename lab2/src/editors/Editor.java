@@ -7,10 +7,10 @@ import shapes.Shape;
 
 public abstract class Editor {
   private final Pane pane;
-  private double startX = 0;
-  private double startY = 0;
-  private boolean drawing = false;
-  private final Shape shape;
+  protected double startX = 0;
+  protected double startY = 0;
+  protected boolean drawing = false;
+  protected final Shape shape;
 
   public Editor(final Pane pane, final Shape shape) {
     this.pane = pane;

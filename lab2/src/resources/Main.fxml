@@ -31,6 +31,7 @@
               </items>
             </Menu>
             <RadioMenuItem mnemonicParsing="false" onAction="#line" text="Лінія" />
+            <RadioMenuItem mnemonicParsing="false" onAction="#brush" text="Пензлик" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Довідка">

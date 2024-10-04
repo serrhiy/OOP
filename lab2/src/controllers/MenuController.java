@@ -77,6 +77,11 @@ public class MenuController {
   }
 
   @FXML
+  private void brush(final ActionEvent event) {
+    processEvent(new BrushEditor(anchorPane), event);
+  }
+
+  @FXML
   private void exit() {
     Platform.exit();
   }
