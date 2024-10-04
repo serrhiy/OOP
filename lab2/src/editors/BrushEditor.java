@@ -1,6 +1,7 @@
 package editors;
 
 import javafx.scene.layout.Pane;
+import settings.Color;
 import shapes.Brush;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -19,6 +20,7 @@ public class BrushEditor extends Editor {
 
   public void onLeftButtonDown(double x, double y) {
     context = super.createContext();
+    Color.applyCurentColor(context);
     context.beginPath();
     context.moveTo(x, y);
   }

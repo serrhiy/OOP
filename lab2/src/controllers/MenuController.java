@@ -13,6 +13,7 @@ import javafx.application.Platform;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Pair;
+import settings.Color;
 import editors.*;
 
 public class MenuController {
@@ -84,6 +85,13 @@ public class MenuController {
   @FXML
   private void exit() {
     Platform.exit();
+  }
+
+  @FXML
+  private void colors(final ActionEvent event) {
+    final var item = (MenuItem)event.getTarget();
+    final var text = item.getText();
+    Color.setColor(text);
   }
 
   private void makeItemsUnique(final String text) {

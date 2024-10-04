@@ -3,6 +3,7 @@ package editors;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
+import settings.Color;
 import shapes.Shape;
 
 public abstract class Editor {
@@ -49,8 +50,10 @@ public abstract class Editor {
     final var coords = getCoords(startX, startY, x, y);
     shape.setCoords(coords);
     final var context = createContext();
+    Color.applyCurentColor(context);
     context.setLineDashes(0);
     shape.draw(context);
+    Color.applyCurentColor(context);
     drawing = false;
   }
 

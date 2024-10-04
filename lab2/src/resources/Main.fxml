@@ -39,6 +39,11 @@
             <MenuItem mnemonicParsing="false" text="About" />
           </items>
         </Menu>
+        <Menu mnemonicParsing="false" onAction="#colors" text="Colors">
+          <items>
+
+          </items>
+        </Menu>
       </menus>
     </MenuBar>
   </top>
