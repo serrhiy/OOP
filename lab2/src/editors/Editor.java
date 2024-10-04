@@ -23,7 +23,9 @@ public abstract class Editor {
     final var height = pane.getHeight();
     final var canvas = new Canvas(width, height);
     pane.getChildren().add(canvas);
-    return canvas.getGraphicsContext2D();
+    final var context = canvas.getGraphicsContext2D();
+    context.setLineWidth(2.5);
+    return context;
   }
 
   protected void deleteLastCanvas() {
@@ -53,7 +55,6 @@ public abstract class Editor {
     Color.applyCurentColor(context);
     context.setLineDashes(0);
     shape.draw(context);
-    Color.applyCurentColor(context);
     drawing = false;
   }
 

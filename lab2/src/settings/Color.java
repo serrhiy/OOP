@@ -10,7 +10,13 @@ public class Color {
     "black", javafx.scene.paint.Color.BLACK,
     "red", javafx.scene.paint.Color.RED,
     "blue", javafx.scene.paint.Color.BLUE,
-    "green", javafx.scene.paint.Color.GREEN
+    "green", javafx.scene.paint.Color.GREEN,
+    "yellow", javafx.scene.paint.Color.YELLOW,
+    "purple", javafx.scene.paint.Color.PURPLE,
+    "pink", javafx.scene.paint.Color.PINK,
+    "gold", javafx.scene.paint.Color.GOLD,
+    "brown", javafx.scene.paint.Color.BROWN,
+    "light blue", javafx.scene.paint.Color.LIGHTBLUE
   );
   
   static public void setColor(final String color) {
