@@ -2,7 +2,6 @@ package editors;
 
 import javafx.scene.layout.Pane;
 import settings.Color;
-import shapes.Brush;
 import javafx.scene.canvas.GraphicsContext;
 
 public class BrushEditor extends Editor {
@@ -10,7 +9,7 @@ public class BrushEditor extends Editor {
   private GraphicsContext context;
 
   public BrushEditor(Pane pane) {
-    super(pane, new Brush());
+    super(pane, null);
   }
 
   @Override
