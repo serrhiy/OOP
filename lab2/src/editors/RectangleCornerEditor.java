@@ -1,17 +1,16 @@
 package editors;
 
 import javafx.scene.layout.Pane;
-import shapes.Elipse;
+import shapes.Rectangle;
 
-public class ElipseAngleEditor extends Editor {
+public class RectangleCornerEditor extends Editor {
 
-  public ElipseAngleEditor(Pane pane) {
-    super(pane, new Elipse());
+  public RectangleCornerEditor(final Pane pane) {
+    super(pane, new Rectangle());
   }
 
   @Override
   protected double[] getCoords(double startX, double startY, double x, double y) {
     return new double[]{ startX, startY, x, y };
   }
-  
 }

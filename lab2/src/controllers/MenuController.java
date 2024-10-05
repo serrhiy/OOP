@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import javafx.scene.control.Menu;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.input.MouseButton;
@@ -59,7 +60,7 @@ public class MenuController {
 
   @FXML
   private void rectangleAngle(final ActionEvent event) {
-    processEvent(new RectangleAngleEditor(anchorPane), event);
+    processEvent(new RectangleCornerEditor(anchorPane), event);
   }
 
   @FXML
@@ -69,7 +70,7 @@ public class MenuController {
 
   @FXML
   private void elipseAngle(final ActionEvent event) {
-    processEvent(new ElipseAngleEditor(anchorPane), event);
+    processEvent(new ElipseCornerEditor(anchorPane), event);
   }
 
   @FXML
@@ -105,6 +106,25 @@ public class MenuController {
     }
   }
 
+  private String getFullName(final MenuItem selected, final Menu root) {
+    final StringBuilder result = new StringBuilder(root.getText() + " -> ");
+    boolean find = false;
+    for (final MenuItem item: root.getItems()) {
+      if (item instanceof final Menu menu) {
+        final var subpath = getFullName(selected, menu);
+        if (subpath.length() == 0) continue;
+        find = true;
+        result.append(subpath);
+        break;
+      }
+      if (!item.equals(selected)) continue;
+      find = true;
+      result.append(item.getText());
+      break;
+    }
+    return find ? result.toString() : "";
+  }
+
   private void buildMenuItems(final Menu root) {
     final List<RadioMenuItem> items = new ArrayList<>();
     for (final MenuItem item: root.getItems()) {
@@ -127,6 +147,9 @@ public class MenuController {
         final var selected = (RadioMenuItem)action.getTarget();
         final var text = selected.getText();
         makeItemsUnique(text);
+        final var window = (Stage)borderPane.getScene().getWindow();
+        final var fullPath = getFullName(selected, objectsMenu);
+        window.setTitle(fullPath);
       });
     }
   }

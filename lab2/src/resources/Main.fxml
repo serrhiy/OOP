@@ -11,30 +11,30 @@
   <top>
     <MenuBar BorderPane.alignment="CENTER">
       <menus>
-        <Menu mnemonicParsing="false" text="Файл">
+        <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#exit" text="Закрити" />
+            <MenuItem mnemonicParsing="false" onAction="#exit" text="Close" />
           </items>
         </Menu>
-        <Menu fx:id="objectsMenu" mnemonicParsing="false" text="Об'єкти">
+        <Menu fx:id="objectsMenu" mnemonicParsing="false" text="Objects">
           <items>
-            <Menu mnemonicParsing="false" text="Прямокутник">
+            <Menu mnemonicParsing="false" text="Rectangle">
               <items>
-                <RadioMenuItem mnemonicParsing="false" onAction="#rectangleCenter" text="Від центру" />
-                <RadioMenuItem mnemonicParsing="false" onAction="#rectangleAngle" text="Від краю" />
+                <RadioMenuItem mnemonicParsing="false" id="Rectangle" onAction="#rectangleCenter" text="From center" />
+                <RadioMenuItem mnemonicParsing="false" onAction="#rectangleAngle" text="From corner" />
               </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Еліпс">
+            <Menu mnemonicParsing="false" text="Elipse">
               <items>
-                <RadioMenuItem mnemonicParsing="false" onAction="#elipseCenter" text="Від центру" />
-                <RadioMenuItem mnemonicParsing="false" onAction="#elipseAngle" text="Від краю" />
+                <RadioMenuItem mnemonicParsing="false" onAction="#elipseCenter" text="From center" />
+                <RadioMenuItem mnemonicParsing="false" onAction="#elipseAngle" text="From corner" />
               </items>
             </Menu>
-            <RadioMenuItem mnemonicParsing="false" onAction="#line" text="Лінія" />
-            <RadioMenuItem mnemonicParsing="false" onAction="#brush" text="Пензлик" />
+            <RadioMenuItem mnemonicParsing="false" onAction="#line" text="Line" />
+            <RadioMenuItem mnemonicParsing="false" onAction="#brush" text="Brush" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Довідка">
+        <Menu mnemonicParsing="false" text="Reference">
           <items>
             <MenuItem mnemonicParsing="false" text="About" />
           </items>

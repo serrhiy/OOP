@@ -28,6 +28,7 @@ public abstract class Editor {
     pane.getChildren().add(canvas);
     final var context = canvas.getGraphicsContext2D();
     context.setLineWidth(lineWidth);
+    Color.applyCurentColor(context);
     return context;
   }
 
@@ -55,7 +56,6 @@ public abstract class Editor {
     final var coords = getCoords(startX, startY, x, y);
     shape.setCoords(coords);
     final var context = createContext();
-    Color.applyCurentColor(context);
     context.setLineDashes(0);
     shape.draw(context);
     drawing = false;
