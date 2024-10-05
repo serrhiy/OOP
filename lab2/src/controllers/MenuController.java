@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Pair;
 import settings.Color;
+import settings.Fill;
 import editors.*;
 
 public class MenuController {
@@ -27,6 +28,9 @@ public class MenuController {
 
   @FXML
   private AnchorPane anchorPane;
+
+  @FXML
+  private Menu colors;
   
   private final List<Pair<Menu, List<RadioMenuItem>>> menuItems = new ArrayList<>();
 
@@ -100,6 +104,12 @@ public class MenuController {
     Color.setColor(text);
   }
 
+  @FXML
+  private void fill() {
+    final var fill =  Fill.getFill();
+    Fill.setFill(!fill);
+  }
+
   private void makeItemsUnique(final String text) {
     for (final var pair: menuItems) {
       final var items = pair.getValue();
@@ -142,9 +152,18 @@ public class MenuController {
     menuItems.addLast(new Pair<Menu,List<RadioMenuItem>>(root, items));
   }
 
+  private void addColors() {
+    final var items = new ArrayList<MenuItem>();
+    for (final var color: Color.getStringColors()) {
+      items.addLast(new MenuItem(color));
+    }
+    colors.getItems().addAll(items);
+  }
+
   @FXML
   private void initialize() {
     buildMenuItems(objectsMenu);
+    addColors();
     for (final var pair: menuItems) {
       final var menu = pair.getKey();
       menu.setOnAction((action) -> {

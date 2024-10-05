@@ -4,8 +4,6 @@ import javafx.scene.layout.Pane;
 import shapes.Point;
 
 public class PointEditor extends Editor {
-  
-  // private GraphicsContext context;
 
   public PointEditor(Pane pane) {
     super(pane, new Point());

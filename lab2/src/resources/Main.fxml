@@ -9,7 +9,7 @@
 
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
   <top>
-    <MenuBar BorderPane.alignment="CENTER">
+    <MenuBar id="menuBar" BorderPane.alignment="CENTER">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
@@ -20,7 +20,7 @@
           <items>
             <Menu mnemonicParsing="false" text="Rectangle">
               <items>
-                <RadioMenuItem mnemonicParsing="false" id="Rectangle" onAction="#rectangleCenter" text="From center" />
+                <RadioMenuItem mnemonicParsing="false" onAction="#rectangleCenter" text="From center" />
                 <RadioMenuItem mnemonicParsing="false" onAction="#rectangleAngle" text="From corner" />
               </items>
             </Menu>
@@ -40,9 +40,13 @@
             <MenuItem mnemonicParsing="false" text="About" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" onAction="#colors" text="Colors">
+        <Menu mnemonicParsing="false" text="Settings">
           <items>
-
+            <Menu mnemonicParsing="false" fx:id="colors" onAction="#colors" text="Colors">
+              <items>
+              </items>
+            </Menu>
+            <RadioMenuItem mnemonicParsing="false" onAction="#fill" text="Fill" />
           </items>
         </Menu>
       </menus>

@@ -24,5 +24,5 @@ public abstract class Shape {
     y2 = coords[3];
   }
 
-  public abstract void draw(final GraphicsContext context);
+  public abstract void draw(final GraphicsContext context, boolean fill);
 }

@@ -4,6 +4,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import settings.Color;
+import settings.Fill;
 import shapes.Shape;
 
 public abstract class Editor {
@@ -49,7 +50,7 @@ public abstract class Editor {
     shape.setCoords(coords);
     final var context = createContext();
     context.setLineDashes(lineDashes);
-    shape.draw(context);
+    shape.draw(context, false);
   }
 
   public void onLeftButtonUp(double x, double y) {
@@ -58,7 +59,7 @@ public abstract class Editor {
     shape.setCoords(coords);
     final var context = createContext();
     context.setLineDashes(0);
-    shape.draw(context);
+    shape.draw(context, Fill.getFill());
     drawing = false;
   }
 
