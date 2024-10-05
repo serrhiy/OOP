@@ -27,10 +27,12 @@ public class Color {
   static public void resetColor(final GraphicsContext context) {
     currentColor = javafx.scene.paint.Color.BLACK;
     context.setStroke(currentColor);
+    context.setFill(currentColor);
   }
 
   static public void applyCurentColor(final GraphicsContext context) {
     context.setStroke(currentColor);
+    context.setFill(currentColor);
   }
 
   static public Collection<? extends String> getStringColors() {

@@ -84,6 +84,11 @@ public class MenuController {
   }
 
   @FXML
+  private void point(final ActionEvent event) {
+    processEvent(new PointEditor(anchorPane), event);
+  }
+
+  @FXML
   private void exit() {
     Platform.exit();
   }

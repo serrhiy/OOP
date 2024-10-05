@@ -33,7 +33,8 @@ public abstract class Editor {
   }
 
   protected void deleteLastCanvas() {
-    pane.getChildren().removeLast();
+    final var childrens = pane.getChildren();
+    if (childrens.size() > 0) childrens.removeLast();
   }
 
   public void onLeftButtonDown(double x, double y) {

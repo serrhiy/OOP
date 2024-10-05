@@ -31,6 +31,7 @@
               </items>
             </Menu>
             <RadioMenuItem mnemonicParsing="false" onAction="#line" text="Line" />
+            <RadioMenuItem mnemonicParsing="false" onAction="#point" text="Point" />
             <RadioMenuItem mnemonicParsing="false" onAction="#brush" text="Brush" />
           </items>
         </Menu>
