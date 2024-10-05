@@ -7,6 +7,9 @@ import settings.Color;
 import shapes.Shape;
 
 public abstract class Editor {
+  private static double lineWidth = 2.5;
+  private static double lineDashes = 10;
+
   private final Pane pane;
   protected double startX = 0;
   protected double startY = 0;
@@ -24,7 +27,7 @@ public abstract class Editor {
     final var canvas = new Canvas(width, height);
     pane.getChildren().add(canvas);
     final var context = canvas.getGraphicsContext2D();
-    context.setLineWidth(2.5);
+    context.setLineWidth(lineWidth);
     return context;
   }
 
@@ -43,7 +46,7 @@ public abstract class Editor {
     final var coords = getCoords(startX, startY, x, y);
     shape.setCoords(coords);
     final var context = createContext();
-    context.setLineDashes(10);
+    context.setLineDashes(lineDashes);
     shape.draw(context);
   }
 
