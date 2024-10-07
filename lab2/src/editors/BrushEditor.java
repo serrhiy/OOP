@@ -2,6 +2,7 @@ package editors;
 
 import javafx.scene.layout.Pane;
 import settings.Color;
+import shapes.Point;
 import javafx.scene.canvas.GraphicsContext;
 
 public class BrushEditor extends Editor {
@@ -17,9 +18,16 @@ public class BrushEditor extends Editor {
     return new double[]{ startX, startY, x, y };
   }
 
+  private void drawPoint(final GraphicsContext context, final double x, final double y) {
+    final var point = new Point(x, y);
+    point.setWidth(1);
+    point.draw(context, false);
+  }
+
   public void onLeftButtonDown(double x, double y) {
     context = super.createContext();
     Color.applyCurentColor(context);
+    drawPoint(context, x, y);
     context.beginPath();
     context.moveTo(x, y);
   }
@@ -30,6 +38,6 @@ public class BrushEditor extends Editor {
   }
 
   public void onLeftButtonUp(double x, double y) {
-
+    drawPoint(context, x, y);
   }
 }
