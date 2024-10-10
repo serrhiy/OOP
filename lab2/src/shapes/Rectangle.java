@@ -9,7 +9,8 @@ public class Rectangle extends Shape {
     final var dy = Math.abs(y2 - y1);
     final var x = Math.min(x1, x2);
     final var y = Math.min(y1, y2);
-    if (fill) context.fillRect(x, y, dx, dy);
-    else context.strokeRect(x, y, dx, dy);
+    final var lineWidth = context.getLineWidth();
+    if (fill) context.fillRect(x, y, dx + lineWidth, dy + lineWidth);
+    else context.strokeRect(x, y, dx + lineWidth, dy + lineWidth);
   }
 }

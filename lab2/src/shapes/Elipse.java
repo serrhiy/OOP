@@ -9,7 +9,8 @@ public class Elipse extends Shape {
     final double dy = Math.abs(y2 - y1);
     final double x = (x1 + x2 - dx) / 2;
     final double y = (y1 + y2 - dy) / 2;
-    if (fill) context.fillOval(x, y, dx, dy);
-    else context.strokeOval(x, y, dx, dy);
+    final var lineWidth = context.getLineWidth();
+    if (fill) context.fillOval(x, y, dx + lineWidth, dy + lineWidth);
+    else context.strokeOval(x, y, dx + lineWidth, dy + lineWidth);
   }
 }
