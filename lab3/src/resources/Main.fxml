@@ -4,10 +4,13 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
    <top>
@@ -18,25 +21,7 @@
             <MenuItem mnemonicParsing="false" onAction="#exit" text="Close" />
           </items>
         </Menu>
-        <Menu fx:id="objectsMenu" mnemonicParsing="false" text="Objects">
-          <items>
-            <Menu mnemonicParsing="false" text="Rectangle">
-              <items>
-                <RadioMenuItem mnemonicParsing="false" onAction="#rectangleCenter" text="From center" />
-                <RadioMenuItem mnemonicParsing="false" onAction="#rectangleAngle" text="From corner" />
-              </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Elipse">
-              <items>
-                <RadioMenuItem mnemonicParsing="false" onAction="#elipseCenter" text="From center" />
-                <RadioMenuItem mnemonicParsing="false" onAction="#elipseAngle" text="From corner" />
-              </items>
-            </Menu>
-            <RadioMenuItem mnemonicParsing="false" onAction="#line" text="Line" />
-            <RadioMenuItem mnemonicParsing="false" onAction="#point" text="Point" />
-            <RadioMenuItem mnemonicParsing="false" onAction="#brush" text="Brush" />
-          </items>
-        </Menu>
+        <Menu fx:id="objectsMenu" mnemonicParsing="false" text="Objects" />
         <Menu mnemonicParsing="false" text="Reference">
           <items>
             <MenuItem mnemonicParsing="false" text="About" />
@@ -44,7 +29,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Settings">
           <items>
-            <Menu mnemonicParsing="false" fx:id="colors" onAction="#colors" text="Colors">
+            <Menu fx:id="colors" mnemonicParsing="false" onAction="#colors" text="Colors">
               <items>
               </items>
             </Menu>
@@ -55,24 +40,103 @@
     </MenuBar>
    </top>
    <center>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <top>
-            <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-              <items>
-                <Button mnemonicParsing="false" text="Button" />
-                  <Button mnemonicParsing="false" text="Button" />
-                  <Button mnemonicParsing="false" text="Button" />
-                  <Button mnemonicParsing="false" text="Button" />
-              </items>
-            </ToolBar>
-         </top>
-         <center>
-          <AnchorPane fx:id="anchorPane" BorderPane.alignment="CENTER">
-            <children>
-                
-            </children>
-          </AnchorPane>
-        </center>
-      </BorderPane>
+    <BorderPane BorderPane.alignment="CENTER">
+      <top>
+        <ToolBar BorderPane.alignment="CENTER" fx:id="toolBar">
+          <!-- <items>
+            <Button mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/brush.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Brush" />
+              </tooltip>
+            </Button>
+            <Button mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/rectangle-center.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Rectangle Center" />
+              </tooltip>
+            </Button>
+            <Button mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/rectangle-corner.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Rectangle Corner" />
+              </tooltip>
+            </Button>
+            <Button mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/ellipse-center.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Elipce Center" />
+              </tooltip>
+            </Button>
+            <Button mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/ellipse-corner.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Elipce Corner" />
+              </tooltip>
+            </Button>
+            <Button mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/line.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Line" />
+              </tooltip>
+            </Button>
+            <Button mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/point.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Point" />
+              </tooltip>
+            </Button>
+          </items> -->
+        </ToolBar>
+      </top>
+      <center>
+        <AnchorPane fx:id="anchorPane" BorderPane.alignment="CENTER">
+          <children>
+          </children>
+        </AnchorPane>
+      </center>
+    </BorderPane>
    </center>
 </BorderPane>

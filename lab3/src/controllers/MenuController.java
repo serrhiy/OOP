@@ -4,19 +4,27 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Pair;
+import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.ToolBar;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.MenuItem;
 import javafx.application.Platform;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.util.Pair;
 import settings.Color;
 import settings.Fill;
 import editors.*;
+import java.util.Map;
+import java.util.HashMap;
 
 public class MenuController {
 
@@ -31,15 +39,21 @@ public class MenuController {
 
   @FXML
   private Menu colors;
-  
+
+  @FXML
+  private ToolBar toolBar;
+
+  private RadioMenuItem lastSelected = null;
+
   private final List<Pair<Menu, List<RadioMenuItem>>> menuItems = new ArrayList<>();
+  private final Map<RadioMenuItem, Class<? extends Editor>> editors = new HashMap<>();
+  private final List<Pair<RadioMenuItem, Button>> buttons = new ArrayList<>();
 
   private boolean isPrimary(final MouseEvent event) {
     return event.getButton().equals(MouseButton.PRIMARY);
   }
 
-  private void processEvent(final Editor editor, final ActionEvent parentEvent) {
-    final var item = (RadioMenuItem)(parentEvent.getSource());
+  private void processEvent(final Editor editor, final RadioMenuItem item) {
     anchorPane.setOnMousePressed((event) -> {
       if (isPrimary(event) && item.isSelected()) {
         editor.onLeftButtonDown(event.getX(), event.getY());
@@ -55,41 +69,6 @@ public class MenuController {
         editor.onLeftButtonUp(event.getX(), event.getY());
       }
     });
-  }
-
-  @FXML
-  private void rectangleCenter(final ActionEvent event) {
-    processEvent(new RectangleCenterEditor(anchorPane), event);
-  }
-
-  @FXML
-  private void rectangleAngle(final ActionEvent event) {
-    processEvent(new RectangleCornerEditor(anchorPane), event);
-  }
-
-  @FXML
-  private void elipseCenter(final ActionEvent event) {
-    processEvent(new ElipseCenterEditor(anchorPane), event);
-  }
-
-  @FXML
-  private void elipseAngle(final ActionEvent event) {
-    processEvent(new ElipseCornerEditor(anchorPane), event);
-  }
-
-  @FXML
-  private void line(final ActionEvent event) {
-    processEvent(new LineEditor(anchorPane), event);
-  }
-
-  @FXML
-  private void brush(final ActionEvent event) {
-    processEvent(new BrushEditor(anchorPane), event);
-  }
-
-  @FXML
-  private void point(final ActionEvent event) {
-    processEvent(new PointEditor(anchorPane), event);
   }
 
   @FXML
@@ -110,14 +89,47 @@ public class MenuController {
     Fill.setFill(!fill);
   }
 
-  private void makeItemsUnique(final String text) {
+  private void addColors() {
+    final var items = new ArrayList<MenuItem>();
+    for (final var color: Color.getStringColors()) {
+      items.addLast(new MenuItem(color));
+    }
+    colors.getItems().addAll(items);
+  }
+
+  @FXML
+  private void initialize() {
+    createObjectsMenu();
+    addColors();
     for (final var pair: menuItems) {
       final var items = pair.getValue();
       for (final var item: items) {
-        final var selected = item.isSelected();
-        final var equals = item.getText().equals(text);
-        if (selected && !equals) item.setSelected(false);
+        item.setOnAction((event) -> {
+          final var selected = (RadioMenuItem)item;
+          if (lastSelected != null) lastSelected.setSelected(false);
+          selected.setSelected(true);
+          lastSelected = selected;
+          final var window = (Stage)borderPane.getScene().getWindow();
+          final var fullPath = getFullName(selected, objectsMenu);
+          window.setTitle(fullPath);
+          final var constructor = editors.get(selected);
+          try {
+            final var declared = constructor.getDeclaredConstructor(Pane.class);
+            final var editor = declared.newInstance(anchorPane);
+            processEvent(editor, selected);
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        });
       }
+    }
+    for (final var par: buttons) {
+      final var button = par.getValue();
+      final var item = par.getKey();
+      button.setOnAction((event) -> {
+        System.out.println("event");
+        item.fire();
+      });
     }
   }
 
@@ -140,41 +152,59 @@ public class MenuController {
     return find ? result.toString() : "";
   }
 
-  private void buildMenuItems(final Menu root) {
-    final List<RadioMenuItem> items = new ArrayList<>();
-    for (final MenuItem item: root.getItems()) {
-      if (item instanceof final Menu menu) {
-        buildMenuItems(menu);
-        continue;
-      }
-      items.addLast((RadioMenuItem)item);
-    }
-    menuItems.addLast(new Pair<Menu,List<RadioMenuItem>>(root, items));
+  private void createObjectsMenu() {
+    final var rectangleMenu = new Menu("Rectangle");
+    final var rectangleCenter = new RadioMenuItem("From center");
+    final var rectangleCorner = new RadioMenuItem("From corner");
+    rectangleMenu.getItems().addAll(rectangleCenter, rectangleCorner);
+    final var elipseMenu = new Menu("Rectangle");
+    final var elipseCenter = new RadioMenuItem("From center");
+    final var elipseCorner = new RadioMenuItem("From corner");
+    elipseMenu.getItems().addAll(elipseCenter, elipseCorner);
+    final var line = new RadioMenuItem("Line");
+    final var point = new RadioMenuItem("Point");
+    final var brush = new RadioMenuItem("Brush");
+    objectsMenu.getItems().addAll(rectangleMenu, elipseMenu, line, point, brush);
+    menuItems.add(new Pair<Menu, List<RadioMenuItem>>(rectangleMenu, List.of(rectangleCenter, rectangleCorner)));
+    menuItems.add(new Pair<Menu, List<RadioMenuItem>>(elipseMenu, List.of(elipseCenter, elipseCorner)));
+    menuItems.add(new Pair<Menu, List<RadioMenuItem>>(objectsMenu, List.of(line, point, brush)));
+    editors.put(rectangleCenter, RectangleCenterEditor.class);
+    editors.put(rectangleCorner, RectangleCornerEditor.class);
+    editors.put(elipseCenter, ElipseCenterEditor.class);
+    editors.put(elipseCorner, ElipseCornerEditor.class);
+    editors.put(line, LineEditor.class);
+    editors.put(point, PointEditor.class);
+    editors.put(brush, BrushEditor.class);
+    final var base = "./resources/icons/";
+    final var recCenterButton = createToolBarButton(base + "rectangle-center.png", "Rectangle Center");
+    final var recCornerButton = createToolBarButton(base + "rectangle-corner.png", "Rectangle Corner");
+    final var elCenterButton = createToolBarButton(base + "ellipse-center.png", "Ellipse Center");
+    final var elCornerButton = createToolBarButton(base + "ellipse-corner.png", "Ellipse Corner");
+    final var lineButton = createToolBarButton(base + "line.png", "Line");
+    final var pointButton = createToolBarButton(base + "point.png", "Point");
+    final var brushButton = createToolBarButton(base + "brush.png", "Brush");
+    buttons.add(new Pair<RadioMenuItem, Button>(rectangleCenter, recCenterButton));
+    buttons.add(new Pair<RadioMenuItem, Button>(rectangleCorner, recCornerButton));
+    buttons.add(new Pair<RadioMenuItem, Button>(elipseCenter, elCenterButton));
+    buttons.add(new Pair<RadioMenuItem, Button>(elipseCorner, elCornerButton));
+    buttons.add(new Pair<RadioMenuItem, Button>(line, lineButton));
+    buttons.add(new Pair<RadioMenuItem, Button>(point, pointButton));
+    buttons.add(new Pair<RadioMenuItem, Button>(brush, brushButton));
+    toolBar.getItems().addAll(
+      recCenterButton, recCornerButton, elCenterButton,
+      elCornerButton, lineButton, pointButton, brushButton
+    );
   }
 
-  private void addColors() {
-    final var items = new ArrayList<MenuItem>();
-    for (final var color: Color.getStringColors()) {
-      items.addLast(new MenuItem(color));
-    }
-    colors.getItems().addAll(items);
-  }
-
-  @FXML
-  private void initialize() {
-    buildMenuItems(objectsMenu);
-    addColors();
-    for (final var pair: menuItems) {
-      final var menu = pair.getKey();
-      menu.setOnAction((action) -> {
-        if (action.getTarget() instanceof Menu) return;
-        final var selected = (RadioMenuItem)action.getTarget();
-        final var text = selected.getText();
-        makeItemsUnique(text);
-        final var window = (Stage)borderPane.getScene().getWindow();
-        final var fullPath = getFullName(selected, objectsMenu);
-        window.setTitle(fullPath);
-      });
-    }
+  private Button createToolBarButton(String imagePath, String hint) {
+    final var image = new Image(imagePath);
+    final var imageView = new ImageView(image);
+    imageView.setFitWidth(32);
+    imageView.setFitHeight(32);
+    final var toolTip = new Tooltip(hint);
+    final var button = new Button();
+    button.setGraphic(imageView);
+    button.setTooltip(toolTip);
+    return button;
   }
 }
