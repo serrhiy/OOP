@@ -17,6 +17,23 @@
           </items>
         </Menu>
         <Menu fx:id="objectsMenu" mnemonicParsing="false" text="Objects">
+          <items>
+            <Menu mnemonicParsing="false" text="Rectangle">
+              <items>
+                <RadioMenuItem id="rectangleCenter" mnemonicParsing="false" text="From center" />
+                <RadioMenuItem id="rectangleCorner" mnemonicParsing="false" text="From corner" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Elipse">
+              <items>
+                <RadioMenuItem id="ellipseCenter" mnemonicParsing="false" text="From center" />
+                <RadioMenuItem id="ellipseCorner" mnemonicParsing="false" text="From corner" />
+              </items>
+            </Menu>
+            <RadioMenuItem id="line" mnemonicParsing="false" text="Line" />
+            <RadioMenuItem id="point" mnemonicParsing="false" text="Point" />
+            <RadioMenuItem id="brush" mnemonicParsing="false" text="Brush" />
+          </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Reference">
           <items>
