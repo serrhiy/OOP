@@ -109,7 +109,9 @@ public class MenuController {
         try {
           Editor editor = constructor.getDeclaredConstructor(Pane.class).newInstance(anchorPane);
           processEvent(editor, selected);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
       });
     }
   }
