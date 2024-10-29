@@ -1,12 +1,11 @@
 package editors;
 
-import javafx.scene.layout.Pane;
 import shapes.Elipse;
 
 public class ElipseCornerEditor extends Editor {
 
-  public ElipseCornerEditor(Pane pane) {
-    super(pane, new Elipse());
+  public ElipseCornerEditor() {
+    super(new Elipse());
   }
 
   @Override

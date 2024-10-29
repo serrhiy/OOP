@@ -3,8 +3,17 @@ package shapes;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Line extends Shape {
+  
+  public Line() {
+    super();
+  }
+
+  public Line(double x1, double y1, double x2, double y2) {
+    super(x1, y1, x2, y2);
+  }
+
   @Override
-  public void draw(GraphicsContext context, boolean fill) {
+  public void draw(GraphicsContext context) {
     context.strokeLine(x1, y1, x2, y2);
   }
 }

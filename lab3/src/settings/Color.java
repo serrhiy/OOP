@@ -1,7 +1,6 @@
 package settings;
 
 import java.util.Map;
-import javafx.scene.canvas.GraphicsContext;
 import java.util.Collection;
 
 public class Color {
@@ -24,15 +23,8 @@ public class Color {
     currentColor = colors.get(color);
   }
 
-  static public void resetColor(final GraphicsContext context) {
-    currentColor = javafx.scene.paint.Color.BLACK;
-    context.setStroke(currentColor);
-    context.setFill(currentColor);
-  }
-
-  static public void applyCurentColor(final GraphicsContext context) {
-    context.setStroke(currentColor);
-    context.setFill(currentColor);
+  static public javafx.scene.paint.Color getCurrentColor() {
+    return currentColor;
   }
 
   static public Collection<? extends String> getStringColors() {
