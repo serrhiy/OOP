@@ -1,12 +1,11 @@
 package editors;
 
-import javafx.scene.layout.Pane;
 import shapes.Point;
 
 public class PointEditor extends Editor {
 
-  public PointEditor(Pane pane) {
-    super(pane, new Point());
+  public PointEditor() {
+    super(new Point());
   }
 
   @Override

@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.scene.control.Menu;
 import javafx.scene.control.RadioMenuItem;
@@ -63,6 +62,7 @@ public class MenuController {
     anchorPane.setOnMouseReleased((event) -> {
       if (isPrimary(event) && item.isSelected()) {
         editor.onLeftButtonUp(event.getX(), event.getY());
+        processEvent(getEditor(item.getId()), item);
       }
     });
   }
@@ -93,6 +93,18 @@ public class MenuController {
     colors.getItems().addAll(items);
   }
 
+  private Editor getEditor(final String id) {
+    final var constructor = editors.get(id);
+    try {
+      final var declared = constructor.getDeclaredConstructor();
+      final var editor = declared.newInstance();
+      return editor;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
   private void addItemsEvenets(final Menu root) {
     for (final var item: root.getItems()) {
       if (item instanceof Menu menu) {
@@ -107,14 +119,8 @@ public class MenuController {
         lastSelected = selected;
         final var window = (Stage)borderPane.getScene().getWindow();
         window.setTitle(fullPath);
-        final var constructor = editors.get(selected.getId());
-        try {
-          final var declared = constructor.getDeclaredConstructor(Pane.class);
-          final var editor = declared.newInstance(anchorPane);
-          processEvent(editor, selected);
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
+        final var editor = getEditor(selected.getId());
+        processEvent(editor, selected);
       });
     }
   }

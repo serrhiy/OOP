@@ -1,12 +1,11 @@
 package editors;
 
-import javafx.scene.layout.Pane;
 import shapes.Rectangle;
 
 public class RectangleCenterEditor extends Editor {
 
-  public RectangleCenterEditor(final Pane pane) {
-    super(pane, new Rectangle());
+  public RectangleCenterEditor() {
+    super(new Rectangle());
   }
 
   @Override

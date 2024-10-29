@@ -1,16 +1,18 @@
 package editors;
 
-import javafx.scene.layout.Pane;
+import canvas.Canvas;
 import settings.Color;
-import shapes.Point;
-import javafx.scene.canvas.GraphicsContext;
+import shapes.Brush;
+import shapes.Line;
 
 public class BrushEditor extends Editor {
+  public final Brush brush;
+  double prevX = 0;
+  double prevY = 0;
 
-  private GraphicsContext context;
-
-  public BrushEditor(Pane pane) {
-    super(pane, null);
+  public BrushEditor() {
+    super(new Brush());
+    brush = (Brush)super.shape;
   }
 
   @Override
@@ -18,26 +20,18 @@ public class BrushEditor extends Editor {
     return new double[]{ startX, startY, x, y };
   }
 
-  private void drawPoint(final GraphicsContext context, final double x, final double y) {
-    final var point = new Point(x, y);
-    point.setWidth(1);
-    point.draw(context, false);
-  }
-
   public void onLeftButtonDown(double x, double y) {
-    context = super.createContext();
-    Color.applyCurentColor(context);
-    drawPoint(context, x, y);
-    context.beginPath();
-    context.moveTo(x, y);
+    prevX = x;
+    prevY = y;
+    brush.color = Color.getCurrentColor();
   }
   
   public void onMouseMove(double x, double y) {
-    context.lineTo(x, y);
-    context.stroke();
-  }
-
-  public void onLeftButtonUp(double x, double y) {
-    drawPoint(context, x, y);
+    if (drawing) Canvas.pop();
+    else drawing = true;
+    brush.addLine(new Line(prevX, prevY, x, y));
+    prevX = x;
+    prevY = y;
+    Canvas.push(brush);
   }
 }

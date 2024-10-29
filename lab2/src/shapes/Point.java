@@ -6,10 +6,6 @@ public class Point extends Shape {
 
   private double width = 0;
 
-  public Point(double x1, double y1, double x2, double y2) {
-    super(x1, y1, x2, y2);
-  }
-
   public Point(double x1, double y1) {
     super(0, 0, x1, y1);
   }
@@ -23,7 +19,7 @@ public class Point extends Shape {
   }
 
   @Override
-  public void draw(GraphicsContext context, boolean fill) {
+  public void draw(GraphicsContext context) {
     final var width = this.width == 0 ? context.getLineWidth() : this.width;
     context.fillOval(x2 - width, y2 - width, width * 2, width * 2);
   }

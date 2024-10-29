@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Elipse extends Shape {
   @Override
-  public void draw(GraphicsContext context, boolean fill) {
+  public void draw(GraphicsContext context) {
     final double dx = Math.abs(x2 - x1);
     final double dy = Math.abs(y2 - y1);
     final double x = (x1 + x2 - dx) / 2;

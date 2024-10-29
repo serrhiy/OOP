@@ -1,12 +1,11 @@
 package editors;
 
-import javafx.scene.layout.Pane;
 import shapes.Elipse;
 
 public class ElipseCenterEditor extends Editor {
 
-  public ElipseCenterEditor(Pane pane) {
-    super(pane, new Elipse());
+  public ElipseCenterEditor() {
+    super(new Elipse());
   }
 
   @Override

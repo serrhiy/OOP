@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -9,7 +10,7 @@
 
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
   <top>
-    <MenuBar id="menuBar" BorderPane.alignment="CENTER">
+    <MenuBar id="menuBar" prefWidth="534.0" BorderPane.alignment="CENTER">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
@@ -42,7 +43,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Settings">
           <items>
-            <Menu mnemonicParsing="false" fx:id="colors" onAction="#colors" text="Colors">
+            <Menu fx:id="colors" mnemonicParsing="false" onAction="#colors" text="Colors">
               <items>
               </items>
             </Menu>
@@ -54,9 +55,9 @@
   </top>
    <center>
       <AnchorPane fx:id="anchorPane" BorderPane.alignment="CENTER">
-         <children>
-            
-         </children>
+        <children>
+          <Canvas />
+        </children>
       </AnchorPane>
    </center>
 </BorderPane>

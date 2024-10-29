@@ -1,12 +1,11 @@
 package editors;
 
-import javafx.scene.layout.Pane;
 import shapes.Line;
 
 public class LineEditor extends Editor {
 
-  public LineEditor(final Pane pane) {
-    super(pane, new Line());
+  public LineEditor() {
+    super(new Line());
   }
 
   @Override
