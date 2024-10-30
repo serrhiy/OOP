@@ -15,6 +15,7 @@
         <Menu mnemonicParsing="false" text="File">
           <items>
             <MenuItem mnemonicParsing="false" onAction="#exit" text="Close" />
+            <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save as..." />
           </items>
         </Menu>
         <Menu fx:id="objectsMenu" mnemonicParsing="false" text="Objects">
@@ -56,7 +57,7 @@
    <center>
       <AnchorPane fx:id="anchorPane" BorderPane.alignment="CENTER">
         <children>
-          <Canvas />
+          <Canvas fx:id="canvas" />
         </children>
       </AnchorPane>
    </center>

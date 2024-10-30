@@ -25,9 +25,7 @@ public class Main extends Application {
     canvas.heightProperty().bind(pane.heightProperty());
     Canvas.setCanvas(canvas);
     scene.setOnKeyPressed((event) -> {
-      if (event.isControlDown() && (event.getCode() == KeyCode.Z)) {
-        Canvas.pop();
-      }
+      if (event.isControlDown() && (event.getCode() == KeyCode.Z)) Canvas.pop();
     });
     stage.setWidth(960);
     stage.setHeight(720);
