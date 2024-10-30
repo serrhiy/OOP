@@ -4,20 +4,28 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToolBar;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.MenuItem;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import settings.Color;
 import settings.Fill;
 import editors.*;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 public class MenuController {
 
@@ -35,6 +43,9 @@ public class MenuController {
 
   @FXML
   private RadioMenuItem lastSelected = null;
+
+  @FXML
+  private Canvas canvas;
 
   @FXML
   private ToolBar toolBar;
@@ -75,6 +86,19 @@ public class MenuController {
   @FXML
   private void exit() {
     Platform.exit();
+  }
+
+  @FXML
+  private void saveAs() throws IOException {
+    final var stage = (Stage)borderPane.getScene().getWindow();
+    final var savefile = new FileChooser();
+    savefile.setTitle("Save File");
+    final var file = savefile.showSaveDialog(stage);
+    if (file == null) return;
+    final var writableImage = new WritableImage((int)stage.getWidth(), (int)stage.getHeight());
+    canvas.snapshot(null, writableImage);
+    final var renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
+    ImageIO.write(renderedImage, "png", file);
   }
 
   @FXML
