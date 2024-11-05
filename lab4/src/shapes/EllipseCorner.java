@@ -5,7 +5,7 @@ import java.util.List;
 
 import javafx.scene.canvas.GraphicsContext;
 
-public class EllipseCorner extends Shape {
+public class EllipseCorner extends Shape implements Ellipsable {
 
   public EllipseCorner() {
     super();
@@ -15,13 +15,14 @@ public class EllipseCorner extends Shape {
   @Override
   public void draw(GraphicsContext context) {
     prepareContext(context);
-    final double x = coords.get(0);
-    final double y = coords.get(1);
-    final double dx = coords.get(2);
-    final double dy = coords.get(3);
-    final var lineWidth = context.getLineWidth();
-    if (fill) context.fillOval(x, y, dx + lineWidth, dy + lineWidth);
-    else context.strokeOval(x, y, dx + lineWidth, dy + lineWidth);
+    Ellipsable.super.drawLine(
+      context,
+      coords.get(0),
+      coords.get(1),
+      coords.get(2),
+      coords.get(3),
+      fill
+    );
   }
 
   @Override

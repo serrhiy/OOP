@@ -5,7 +5,7 @@ import java.util.List;
 
 import javafx.scene.canvas.GraphicsContext;
 
-public class Line extends Shape {
+public class Line extends Shape implements Linable {
 
   public Line() {
     super();
@@ -15,7 +15,8 @@ public class Line extends Shape {
   @Override
   public void draw(GraphicsContext context) {
     prepareContext(context);
-    context.strokeLine(
+    Linable.super.drawLine(
+      context, 
       coords.get(0),
       coords.get(1),
       coords.get(2),

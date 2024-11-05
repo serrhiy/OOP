@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.List;
 import java.util.ArrayList;
 
-public class RectangleCorner extends Shape {
+public class RectangleCorner extends Shape implements Rectangable {
   public RectangleCorner() {
     super();
     coords = new ArrayList<>(List.of(0.0, 0.0, 0.0, 0.0));
@@ -13,13 +13,14 @@ public class RectangleCorner extends Shape {
   @Override
   public void draw(GraphicsContext context) {
     prepareContext(context);
-    final var x = coords.get(0);
-    final var y = coords.get(1);
-    final var dx = coords.get(2);
-    final var dy = coords.get(3);
-    final var lineWidth = context.getLineWidth();
-    if (fill) context.fillRect(x, y, dx + lineWidth, dy + lineWidth);
-    else context.strokeRect(x, y, dx + lineWidth, dy + lineWidth);
+    Rectangable.super.drawRectangle(
+      context,
+      coords.get(0),
+      coords.get(1),
+      coords.get(2),
+      coords.get(3),
+      fill
+    );
   }
 
   @Override

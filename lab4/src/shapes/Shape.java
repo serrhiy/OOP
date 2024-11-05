@@ -4,26 +4,18 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import java.util.List;
 
-public abstract class Shape {
+public abstract class Shape implements Shapeble {
   protected List<Double> coords;
   public Color color = Color.BLACK;
   public boolean fill = false;
   public double dashes = 0;
-  public double width = 2.5;
   public boolean useDashes = true;
 
   protected void prepareContext(final GraphicsContext context) {
     context.setStroke(color);
     context.setFill(color);
-    context.setLineWidth(width);
     context.setLineDashes(dashes);
   }
 
-  public abstract void setCoords(double x1, double y1, double x2, double y2);
-
   public abstract void draw(final GraphicsContext context);
-
-  public void onStart(GraphicsContext context, double x, double y) {
-    
-  }
 }

@@ -23,6 +23,7 @@ public class Point extends Shape {
     prepareContext(context);
     final var x = coords.get(0);
     final var y = coords.get(1);
+    final var width = context.getLineWidth();
     context.fillOval(x - width, y - width, width * 2, width * 2);
   }
 
