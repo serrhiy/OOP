@@ -17,14 +17,17 @@ public class Brush extends Shape {
     if (size <= 2) return;
     var prevX = coords.get(0);
     var prevY = coords.get(1);
+    context.moveTo(prevX, prevY);
+    context.beginPath();
     for (int i = 2; i < size; i += 2) {
       final var x = coords.get(i);
       final var y = coords.get(i + 1);
-      context.moveTo(prevX, prevY);
       context.lineTo(x, y);
+      context.stroke();
       prevX = x;
       prevY = y;
     }
+    // context.closePath();
   }
 
   @Override
