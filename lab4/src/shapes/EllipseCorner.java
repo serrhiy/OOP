@@ -5,9 +5,9 @@ import java.util.List;
 
 import javafx.scene.canvas.GraphicsContext;
 
-public class Ellipse extends Shape {
+public class EllipseCorner extends Shape {
 
-  public Ellipse() {
+  public EllipseCorner() {
     super();
     coords = new ArrayList<>(List.of(0.0, 0.0, 0.0, 0.0));
   }

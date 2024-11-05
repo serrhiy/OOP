@@ -10,6 +10,7 @@ public abstract class Shape {
   public boolean fill = false;
   public double dashes = 0;
   public double width = 2.5;
+  public boolean useDashes = true;
 
   public abstract void setCoords(double x1, double y1, double x2, double y2);
 

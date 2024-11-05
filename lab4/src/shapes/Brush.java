@@ -8,7 +8,8 @@ public class Brush extends Shape {
 
   public Brush() {
     super();
-    this.coords = new ArrayList<>();
+    coords = new ArrayList<>();
+    useDashes = false;
   }
 
   @Override
@@ -17,17 +18,13 @@ public class Brush extends Shape {
     if (size <= 2) return;
     var prevX = coords.get(0);
     var prevY = coords.get(1);
-    context.moveTo(prevX, prevY);
-    context.beginPath();
     for (int i = 2; i < size; i += 2) {
       final var x = coords.get(i);
       final var y = coords.get(i + 1);
-      context.lineTo(x, y);
-      context.stroke();
+      context.strokeLine(prevX, prevY, x, y);
       prevX = x;
       prevY = y;
     }
-    // context.closePath();
   }
 
   @Override

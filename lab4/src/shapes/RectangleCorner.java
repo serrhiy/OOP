@@ -4,8 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Rectangle extends Shape {
-  public Rectangle() {
+public class RectangleCorner extends Shape {
+  public RectangleCorner() {
     super();
     coords = new ArrayList<>(List.of(0.0, 0.0, 0.0, 0.0));
   }

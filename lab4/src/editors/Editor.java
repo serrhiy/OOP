@@ -7,10 +7,8 @@ import javafx.scene.canvas.GraphicsContext;
 import settings.Color;
 import settings.Fill;
 
-
 public class Editor {
   private static double lineDashes = 10;
-
   private double startX = 0;
   private double startY = 0;
   private boolean drawing = false;
@@ -35,7 +33,7 @@ public class Editor {
     for (final var shape: shapes) draw(shape);
   }
 
-  private void clear() {
+  public void clear() {
     context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
   }
 
@@ -43,29 +41,31 @@ public class Editor {
     shapes.add(shape);
   }
 
+  public void pop() {
+    if (shapes.size() > 0) shapes.pop();
+  }
+
   public void onLeftButtonDown(double x, double y) {
     startX = x;
     startY = y;
+    final var shape = shapes.peek();
+    shape.dashes = shape.useDashes ? lineDashes : 0;
+    shape.color = Color.getCurrentColor();
+    shape.fill = Fill.getFill();
   }
 
   public void onMouseMove(double x, double y) {
     if (drawing) clear();
     else drawing = true;
-    final var shape = shapes.pop();
-    shape.setCoords(startX, startY, x, y);
-    shape.dashes = lineDashes;
-    shape.color = Color.getCurrentColor();
-    shape.fill = Fill.getFill();
-    shapes.add(shape);
+    shapes.peek().setCoords(startX, startY, x, y);
     drawAll();
   }
 
   public void onLeftButtonUp(double x, double y) {
-    final var shape = shapes.pop();
     clear();
+    final var shape = shapes.peek();
     shape.setCoords(startX, startY, x, y);
     shape.dashes = 0;
-    shapes.add(shape);
     drawAll();
     drawing = false;
   }  

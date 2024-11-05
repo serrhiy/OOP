@@ -17,7 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.control.MenuItem;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
-
+import javafx.scene.input.KeyCode;
 import java.io.IOException;
 import java.util.ArrayList;
 import settings.Color;
@@ -55,10 +55,10 @@ public class MenuController {
   private Editor editor;
 
   private final Map<String, Class<? extends Shape>> editors = Map.of(
-    "rectangleCenter", Rectangle.class,
-    "rectangleCorner", Rectangle.class,
-    "ellipseCenter", Ellipse.class,
-    "ellipseCorner", Ellipse.class,
+    "rectangleCenter", RectangleCenter.class,
+    "rectangleCorner", RectangleCorner.class,
+    "ellipseCenter", EllipseCenter.class,
+    "ellipseCorner", EllipseCorner.class,
     "line", Line.class,
     "point", Point.class,
     "brush", Brush.class
@@ -165,11 +165,22 @@ public class MenuController {
     }
   }
 
+  @SuppressWarnings("unused")
   @FXML
   private void initialize() {
     addColors();
     addItemsEvenets(objectsMenu);
     editor = new Editor(canvas);
+    borderPane.sceneProperty().addListener((property) -> {
+      final var scene = borderPane.getScene();
+      scene.setOnKeyPressed((event) -> {
+      if (event.isControlDown() && (event.getCode() == KeyCode.Z)) {
+        editor.pop();
+        editor.clear();
+        editor.drawAll();
+      };
+    });
+    });
   }
 
   private String getFullName(final MenuItem selected, final Menu root) {
