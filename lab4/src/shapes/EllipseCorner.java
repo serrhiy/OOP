@@ -15,7 +15,7 @@ public class EllipseCorner extends Shape implements Ellipsable {
   @Override
   public void draw(GraphicsContext context) {
     prepareContext(context);
-    Ellipsable.super.drawLine(
+    Ellipsable.super.drawEllipse(
       context,
       coords.get(0),
       coords.get(1),

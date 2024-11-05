@@ -38,6 +38,7 @@
               </items>
             </Menu>
             <RadioMenuItem id="line" mnemonicParsing="false" text="Line" />
+            <RadioMenuItem id="line-ellipse" mnemonicParsing="false" text="Line Ellipse" />
             <RadioMenuItem id="point" mnemonicParsing="false" text="Point" />
             <RadioMenuItem id="brush" mnemonicParsing="false" text="Brush" />
           </items>
@@ -117,6 +118,18 @@
                 <ImageView fitHeight="32.0" fitWidth="32.0">
                   <image>
                     <Image url="@icons/line.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Line" />
+              </tooltip>
+            </Button>
+            <Button id="line-ellipse-button" mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/line-ellipse.png" />
                   </image>
                 </ImageView>
               </graphic>

@@ -61,7 +61,8 @@ public class MenuController {
     "ellipseCorner", EllipseCorner.class,
     "line", Line.class,
     "point", Point.class,
-    "brush", Brush.class
+    "brush", Brush.class,
+    "line-ellipse", LineEllipse.class
   );
 
   private boolean isPrimary(final MouseEvent event) {
