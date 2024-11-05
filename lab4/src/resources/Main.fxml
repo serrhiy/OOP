@@ -37,6 +37,7 @@
                 <RadioMenuItem id="ellipseCorner" mnemonicParsing="false" text="From corner" />
               </items>
             </Menu>
+            <RadioMenuItem id="cube" mnemonicParsing="false" text="Cube" />
             <RadioMenuItem id="line" mnemonicParsing="false" text="Line" />
             <RadioMenuItem id="line-ellipse" mnemonicParsing="false" text="Line Ellipse" />
             <RadioMenuItem id="point" mnemonicParsing="false" text="Point" />
@@ -89,6 +90,18 @@
                 <Tooltip text="Rectangle Corner" />
               </tooltip>
             </Button>
+            <Button id="cube-button" mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/cube.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Cube" />
+              </tooltip>
+            </Button>
             <Button id="ellipseCenter-button" mnemonicParsing="false">
               <graphic>
                 <ImageView fitHeight="32.0" fitWidth="32.0">
@@ -134,7 +147,7 @@
                 </ImageView>
               </graphic>
               <tooltip>
-                <Tooltip text="Line" />
+                <Tooltip text="Line ELlipse" />
               </tooltip>
             </Button>
             <Button id="point-button" mnemonicParsing="false">
