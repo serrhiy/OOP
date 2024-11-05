@@ -16,9 +16,18 @@ public class Editor {
   private final Canvas canvas;
   private GraphicsContext context;
 
+  @SuppressWarnings("unused")
   public Editor(final Canvas canvas) {
     this.canvas = canvas;
     context = canvas.getGraphicsContext2D();
+    canvas.widthProperty().addListener((event) -> {
+      clear();
+      drawAll();
+    });
+    canvas.heightProperty().addListener((event) -> {
+      clear();
+      drawAll();
+    });
   }
 
   public void drawAll() {

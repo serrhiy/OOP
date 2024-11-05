@@ -102,7 +102,7 @@ public class MenuController {
     savefile.setTitle("Save File");
     final var file = savefile.showSaveDialog(stage);
     if (file == null) return;
-    final var writableImage = new WritableImage((int)stage.getWidth(), (int)stage.getHeight());
+    final var writableImage = new WritableImage((int)canvas.getWidth(), (int)canvas.getHeight());
     canvas.snapshot(null, writableImage);
     final var renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
     ImageIO.write(renderedImage, "png", file);

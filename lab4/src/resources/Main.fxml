@@ -14,8 +14,8 @@
 <?import javafx.scene.canvas.Canvas?>
 
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
-   <top>
-      <MenuBar id="menuBar" BorderPane.alignment="CENTER">
+  <top>
+    <MenuBar id="menuBar" BorderPane.alignment="CENTER">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
@@ -60,7 +60,7 @@
         </Menu>
       </menus>
     </MenuBar>
-   </top>
+  </top>
    <center>
     <BorderPane BorderPane.alignment="CENTER">
       <top>
