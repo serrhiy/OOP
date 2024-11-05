@@ -12,6 +12,7 @@ public class RectangleCorner extends Shape {
 
   @Override
   public void draw(GraphicsContext context) {
+    prepareContext(context);
     final var x = coords.get(0);
     final var y = coords.get(1);
     final var dx = coords.get(2);

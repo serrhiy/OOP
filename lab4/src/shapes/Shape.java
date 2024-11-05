@@ -12,7 +12,18 @@ public abstract class Shape {
   public double width = 2.5;
   public boolean useDashes = true;
 
+  protected void prepareContext(final GraphicsContext context) {
+    context.setStroke(color);
+    context.setFill(color);
+    context.setLineWidth(width);
+    context.setLineDashes(dashes);
+  }
+
   public abstract void setCoords(double x1, double y1, double x2, double y2);
 
   public abstract void draw(final GraphicsContext context);
+
+  public void onStart(GraphicsContext context, double x, double y) {
+    
+  }
 }

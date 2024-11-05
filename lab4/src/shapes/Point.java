@@ -13,8 +13,14 @@ public class Point extends Shape {
   }
 
   @Override
+  public void onStart(GraphicsContext context, double x, double y) {
+    this.setCoords(0, 0, x, y);
+    this.draw(context);
+  }
+
+  @Override
   public void draw(GraphicsContext context) {
-    final var width = context.getLineWidth();
+    prepareContext(context);
     final var x = coords.get(0);
     final var y = coords.get(1);
     context.fillOval(x - width, y - width, width * 2, width * 2);

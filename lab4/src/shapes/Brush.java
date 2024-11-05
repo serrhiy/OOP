@@ -13,7 +13,13 @@ public class Brush extends Shape {
   }
 
   @Override
+  public void onStart(GraphicsContext context, double x, double y) {
+    this.setCoords(0, 0, x, y);
+  }
+
+  @Override
   public void draw(GraphicsContext context) {
+    prepareContext(context);
     final var size = coords.size();
     if (size <= 2) return;
     var prevX = coords.get(0);

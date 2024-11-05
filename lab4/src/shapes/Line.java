@@ -14,6 +14,7 @@ public class Line extends Shape {
 
   @Override
   public void draw(GraphicsContext context) {
+    prepareContext(context);
     context.strokeLine(
       coords.get(0),
       coords.get(1),

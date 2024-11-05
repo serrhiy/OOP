@@ -21,16 +21,8 @@ public class Editor {
     context = canvas.getGraphicsContext2D();
   }
 
-  public void draw(final Shape shape) {
-    context.setStroke(shape.color);
-    context.setFill(shape.color);
-    context.setLineWidth(shape.width);
-    context.setLineDashes(shape.dashes);
-    shape.draw(context);
-  }
-
   public void drawAll() {
-    for (final var shape: shapes) draw(shape);
+    for (final var shape: shapes) shape.draw(context);
   }
 
   public void clear() {
@@ -52,6 +44,7 @@ public class Editor {
     shape.dashes = shape.useDashes ? lineDashes : 0;
     shape.color = Color.getCurrentColor();
     shape.fill = Fill.getFill();
+    shape.onStart(context, x, y);
   }
 
   public void onMouseMove(double x, double y) {

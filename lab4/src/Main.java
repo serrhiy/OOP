@@ -21,9 +21,6 @@ public class Main extends Application {
     final var canvas = (javafx.scene.canvas.Canvas)pane.getChildren().getFirst();
     canvas.widthProperty().bind(pane.widthProperty());
     canvas.heightProperty().bind(pane.heightProperty());
-    // scene.setOnKeyPressed((event) -> {
-    //   if (event.isControlDown() && (event.getCode() == KeyCode.Z)) Canvas.pop();
-    // });
     stage.setWidth(960);
     stage.setHeight(720);
     stage.setScene(scene);

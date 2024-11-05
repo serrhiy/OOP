@@ -14,6 +14,7 @@ public class EllipseCorner extends Shape {
   
   @Override
   public void draw(GraphicsContext context) {
+    prepareContext(context);
     final double x = coords.get(0);
     final double y = coords.get(1);
     final double dx = coords.get(2);
