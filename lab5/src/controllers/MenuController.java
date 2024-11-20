@@ -117,8 +117,8 @@ public class MenuController {
 
   @FXML
   private void fill() {
-    final var fill =  Fill.getFill();
-    Fill.setFill(!fill);
+    final var fill =  Fill.getInstance().getFill();
+    Fill.getInstance().setFill(!fill);
   }
 
   private void addColors() {

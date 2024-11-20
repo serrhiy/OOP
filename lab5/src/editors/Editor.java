@@ -52,7 +52,7 @@ public class Editor {
     final var shape = shapes.peek();
     shape.dashes = shape.useDashes ? lineDashes : 0;
     shape.color = Color.getInstance().getCurrentColor();
-    shape.fill = Fill.getFill();
+    shape.fill = Fill.getInstance().getFill();
     shape.onStart(context, x, y);
   }
 

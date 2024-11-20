@@ -1,13 +1,18 @@
 package settings;
 
 public class Fill {
-  private static boolean fill = false;
+  private static Fill instance = new Fill();
+  private boolean fill = false;
 
-  public static boolean getFill() {
+  public boolean getFill() {
     return fill;
   }
 
-  public static void setFill(final boolean flag) {
+  public void setFill(final boolean flag) {
     fill = flag;
+  }
+
+  public static Fill getInstance() {
+    return instance;
   }
 }
