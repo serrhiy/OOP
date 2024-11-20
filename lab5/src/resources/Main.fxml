@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.canvas.Canvas?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
+  <top>
+    <MenuBar id="menuBar" BorderPane.alignment="CENTER">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save as..." />
+            <MenuItem mnemonicParsing="false" onAction="#exit" text="Close" />
+          </items>
+        </Menu>
+        <Menu fx:id="objectsMenu" mnemonicParsing="false" text="Objects">
+          <items>
+            <Menu mnemonicParsing="false" text="Rectangle">
+              <items>
+                <RadioMenuItem id="rectangleCenter" mnemonicParsing="false" text="From center" />
+                <RadioMenuItem id="rectangleCorner" mnemonicParsing="false" text="From corner" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Elipse">
+              <items>
+                <RadioMenuItem id="ellipseCenter" mnemonicParsing="false" text="From center" />
+                <RadioMenuItem id="ellipseCorner" mnemonicParsing="false" text="From corner" />
+              </items>
+            </Menu>
+            <RadioMenuItem id="cube" mnemonicParsing="false" text="Cube" />
+            <RadioMenuItem id="line" mnemonicParsing="false" text="Line" />
+            <RadioMenuItem id="line-ellipse" mnemonicParsing="false" text="Line Ellipse" />
+            <RadioMenuItem id="point" mnemonicParsing="false" text="Point" />
+            <RadioMenuItem id="brush" mnemonicParsing="false" text="Brush" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Reference">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Settings">
+          <items>
+            <Menu fx:id="colors" mnemonicParsing="false" onAction="#colors" text="Colors">
+              <items>
+              </items>
+            </Menu>
+            <RadioMenuItem mnemonicParsing="false" onAction="#fill" text="Fill" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+  </top>
+   <center>
+    <BorderPane BorderPane.alignment="CENTER">
+      <top>
+        <ToolBar BorderPane.alignment="CENTER" fx:id="toolBar">
+          <items>
+            <Button id="rectangleCenter-button" mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/rectangle-center.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Rectangle Center" />
+              </tooltip>
+            </Button>
+            <Button id="rectangleCorner-button" mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/rectangle-corner.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Rectangle Corner" />
+              </tooltip>
+            </Button>
+            <Button id="cube-button" mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/cube.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Cube" />
+              </tooltip>
+            </Button>
+            <Button id="ellipseCenter-button" mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/ellipse-center.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Ellipse Center" />
+              </tooltip>
+            </Button>
+            <Button id="ellipseCorner-button" mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/ellipse-corner.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Elipce Corner" />
+              </tooltip>
+            </Button>
+            <Button id="line-button" mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/line.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Line" />
+              </tooltip>
+            </Button>
+            <Button id="line-ellipse-button" mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/line-ellipse.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Line ELlipse" />
+              </tooltip>
+            </Button>
+            <Button id="point-button" mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/point.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Point" />
+              </tooltip>
+            </Button>
+            <Button id="brush-button" mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/brush.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Brush" />
+              </tooltip>
+            </Button>
+          </items>
+        </ToolBar>
+      </top>
+      <center>
+        <AnchorPane fx:id="anchorPane" BorderPane.alignment="CENTER">
+          <Canvas fx:id="canvas" />
+        </AnchorPane>
+      </center>
+    </BorderPane>
+   </center>
+</BorderPane>
