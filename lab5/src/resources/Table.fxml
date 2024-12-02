@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+
+
+<ScrollPane fx:id="scrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TableController" fitToWidth="true" fitToHeight="true">
+  <content>
+    <VBox>
+      <children>
+        <TableView fx:id="tableView">
+          <columns>
+            <TableColumn prefWidth="120.0" text="Name" />
+            <TableColumn prefWidth="90.0" text="x1" />
+            <TableColumn prefWidth="90.0" text="y1" />
+            <TableColumn prefWidth="90.0" text="x2" />
+            <TableColumn prefWidth="90.0" text="y2" />
+          </columns>
+        </TableView>
+      </children>
+    </VBox>
+  </content>
+</ScrollPane>

@@ -4,14 +4,29 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.canvas.Canvas;
+import javafx.scene.control.ScrollPane;
 
 public class Main extends Application {
-  final private String pathToView = "./resources/Main.fxml";
-  final private String title = "Lab 5";
+  private final String pathToView = "./resources/Main.fxml";
+  private final String pathToViewTable = "./resources/Table.fxml";
+  private final String titleMain = "Lab 5";
+  private final String titleTable = "Table";
+  private final double width = 900;
+  private final double height = 900;
+
 
   static void main(String[] args) {
     launch(args);
+  }
+
+  public Stage startTable() throws Exception {
+    final var stage = new Stage();
+    final ScrollPane root = FXMLLoader.load(getClass().getResource(pathToViewTable));
+    final var scene = new Scene(root);
+    stage.setScene(scene);
+    stage.setTitle(titleTable);
+    stage.show();
+    return stage;
   }
 
   @Override
@@ -19,13 +34,13 @@ public class Main extends Application {
     final BorderPane root = FXMLLoader.load(getClass().getResource(pathToView));
     final Scene scene = new Scene(root);
     final var pane = (AnchorPane)((BorderPane)root.getCenter()).getCenter();
-    final var canvas = (Canvas)pane.getChildren().getFirst();
-    canvas.widthProperty().bind(pane.widthProperty());
-    canvas.heightProperty().bind(pane.heightProperty());
     stage.setScene(scene);
-    pane.setPrefHeight(700);
-    pane.setPrefWidth(900);
-    stage.setTitle(title);
+    pane.setPrefWidth(width);
+    pane.setPrefHeight(height);
+    stage.setTitle(titleMain);
+    final var tableStage = startTable();
+    tableStage.setOnCloseRequest((_) -> { stage.close(); });
+    stage.setOnCloseRequest((_) -> { tableStage.close(); });
     stage.show();
   }
 }

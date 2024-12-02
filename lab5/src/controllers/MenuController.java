@@ -170,6 +170,8 @@ public class MenuController {
   @SuppressWarnings("unused")
   @FXML
   private void initialize() {
+    canvas.widthProperty().bind(anchorPane.widthProperty());
+    canvas.heightProperty().bind(anchorPane.heightProperty());
     addColors();
     addItemsEvenets(objectsMenu);
     editor = Editor.getInstance().setCanvas(canvas);
