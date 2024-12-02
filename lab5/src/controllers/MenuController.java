@@ -172,7 +172,7 @@ public class MenuController {
   private void initialize() {
     addColors();
     addItemsEvenets(objectsMenu);
-    editor = new Editor(canvas);
+    editor = Editor.getInstance().setCanvas(canvas);
     borderPane.sceneProperty().addListener((property) -> {
       final var scene = borderPane.getScene();
       scene.setOnKeyPressed((event) -> {

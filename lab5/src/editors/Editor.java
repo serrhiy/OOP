@@ -8,26 +8,33 @@ import settings.Color;
 import settings.Fill;
 
 public class Editor {
-  private static double lineDashes = 10;
+  private static final double lineDashes = 10;
   private double startX = 0;
   private double startY = 0;
   private boolean drawing = false;
-  private static Stack<Shape> shapes = new Stack<>();
-  private final Canvas canvas;
+  private Stack<Shape> shapes = new Stack<>();
+  private Canvas canvas;
   private GraphicsContext context;
 
-  @SuppressWarnings("unused")
-  public Editor(final Canvas canvas) {
+  private static Editor instance = null;
+
+  public Editor setCanvas(final Canvas canvas) {
     this.canvas = canvas;
     context = canvas.getGraphicsContext2D();
-    canvas.widthProperty().addListener((event) -> {
+    canvas.widthProperty().addListener((_) -> {
       clear();
       drawAll();
     });
-    canvas.heightProperty().addListener((event) -> {
+    canvas.heightProperty().addListener((_) -> {
       clear();
       drawAll();
     });
+    return this;
+  }
+
+  public static Editor getInstance() {
+    instance = instance == null ? new Editor() : instance;
+    return instance;
   }
 
   public void drawAll() {

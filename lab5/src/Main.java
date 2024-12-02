@@ -8,7 +8,7 @@ import javafx.scene.canvas.Canvas;
 
 public class Main extends Application {
   final private String pathToView = "./resources/Main.fxml";
-  final private String title = "Lab 3";
+  final private String title = "Lab 5";
 
   static void main(String[] args) {
     launch(args);
