@@ -22,7 +22,7 @@ public class PointPair {
     this.x1.set(x1);
     this.y1.set(y1);
     this.x2.set(x2);
-    this.y2.set(y1);
+    this.y2.set(y2);
     return this;
   }
 

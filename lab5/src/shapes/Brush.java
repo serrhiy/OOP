@@ -46,6 +46,10 @@ public class Brush extends Shape {
 
   @Override
   public Pair<Pair<Double, Double>, Pair<Double, Double>> getDisplayCoords() {
+    for (final var number: coords) {
+      System.out.print(number + " ");
+    }
+    System.out.println("\n" + coords.size());
     final var x1 = coords.get(0);
     final var y1 = coords.get(1);
     final var x2 = coords.get(coords.size() - 2);
