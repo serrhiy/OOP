@@ -1,16 +1,17 @@
 package shapes;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import javafx.scene.canvas.GraphicsContext;
 import javafx.util.Pair;
 
 public class Point extends Shape {
 
   public Point() {
-    super();
-    coords = new ArrayList<>(List.of(0.0, 0.0));
+    this(List.of(0.0, 0.0));
+  }
+
+  public Point(final List<Double> coords) {
+    super(coords);
   }
 
   @Override

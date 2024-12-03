@@ -42,11 +42,16 @@ public class Editor {
     return instance;
   }
 
-  public void drawAll() {
+  private void redraw() {
+    clear();
+    drawAll();
+  }
+
+  private void drawAll() {
     for (final var shape: shapes) shape.draw(context);
   }
 
-  public void clear() {
+  private void clear() {
     context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
   }
 
@@ -54,8 +59,17 @@ public class Editor {
     shapes.add(shape);
   }
 
+  public void addToCanvas(final Shape shape) {
+    this.add(shape);
+    redraw();
+    this.emit("create", shape);
+  }
+
   public void pop() {
-    if (shapes.size() > 0) shapes.removeLast();
+    if (shapes.size() == 0) return;
+    final var shape = shapes.removeLast();
+    redraw();
+    this.emit("delete", shape);
   }
 
   public void onLeftButtonDown(double x, double y) {
@@ -101,11 +115,10 @@ public class Editor {
     return this;
   }
 
-  public void removeLast() {
-    if (this.shapes.size() == 0) return;
-    final var shape = shapes.removeLast();
-    this.clear();
-    this.drawAll();
-    this.emit("delete", shape);
+  public Editor reset() {
+    for (final var shape: shapes) emit("delete", shape);
+    shapes.clear();
+    clear();
+    return this;
   }
 }

@@ -1,8 +1,6 @@
 package shapes;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import javafx.scene.canvas.GraphicsContext;
 import javafx.util.Pair;
 
@@ -10,7 +8,10 @@ public class EllipseCorner extends Shape implements Ellipsable {
 
   public EllipseCorner() {
     super();
-    coords = new ArrayList<>(List.of(0.0, 0.0, 0.0, 0.0));
+  }
+
+  public EllipseCorner(final List<Double> coords) {
+    super(coords);
   }
   
   @Override

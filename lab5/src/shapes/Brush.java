@@ -1,16 +1,20 @@
 package shapes;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.util.Pair;
 
 public class Brush extends Shape {
 
-  public Brush() {
-    super();
-    coords = new ArrayList<>();
+  public Brush(final List<Double> coords) {
+    super(coords);
     useDashes = false;
+  }
+
+  public Brush() {
+    this(new ArrayList<>());
   }
 
   @Override

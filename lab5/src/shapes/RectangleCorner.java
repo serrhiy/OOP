@@ -2,14 +2,15 @@ package shapes;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.util.Pair;
-
 import java.util.List;
-import java.util.ArrayList;
 
 public class RectangleCorner extends Shape implements Rectangable {
   public RectangleCorner() {
     super();
-    coords = new ArrayList<>(List.of(0.0, 0.0, 0.0, 0.0));
+  }
+
+  public RectangleCorner(final List<Double> coords) {
+    super(coords);
   }
 
   @Override
@@ -27,6 +28,7 @@ public class RectangleCorner extends Shape implements Rectangable {
 
   @Override
   public void setCoords(double x1, double y1, double x2, double y2) {
+
     coords.set(0, Math.min(x1, x2));
     coords.set(1, Math.min(y1, y2));
     coords.set(2, Math.abs(x2 - x1));

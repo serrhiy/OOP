@@ -1,6 +1,5 @@
 package shapes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.canvas.GraphicsContext;
@@ -13,7 +12,10 @@ public class Cube extends Shape implements Linable, Rectangable {
 
   public Cube() {
     super();
-    coords = new ArrayList<>(List.of(0.0, 0.0, 0.0, 0.0));
+  }
+
+  public Cube(final List<Double> coords) {
+    super(coords);
   }
 
   @Override

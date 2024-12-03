@@ -1,8 +1,6 @@
 package shapes;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import javafx.scene.canvas.GraphicsContext;
 import javafx.util.Pair;
 
@@ -10,7 +8,10 @@ public class Line extends Shape implements Linable {
 
   public Line() {
     super();
-    coords = new ArrayList<>(List.of(0.0, 0.0, 0.0, 0.0));
+  }
+
+  public Line(final List<Double> coords) {
+    super(coords);
   }
 
   @Override

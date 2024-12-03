@@ -1,8 +1,7 @@
 package shapes;
 
-import java.util.ArrayList;
-import java.util.List;
 
+import java.util.List;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.util.Pair;
 
@@ -11,7 +10,10 @@ public class LineEllipse extends Shape implements Linable, Ellipsable {
 
   public LineEllipse() {
     super();
-    coords = new ArrayList<>(List.of(0.0, 0.0, 0.0, 0.0));
+  }
+
+  public LineEllipse(final List<Double> coords) {
+    super(coords);
   }
 
   @Override

@@ -18,8 +18,13 @@ import javafx.scene.control.MenuItem;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.input.KeyCode;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.List;
+
 import settings.Color;
 import settings.Fill;
 import shapes.*;
@@ -52,8 +57,6 @@ public class MenuController {
   @FXML
   private ToolBar toolBar;
 
-  private Editor editor;
-
   private final Map<String, Class<? extends Shape>> editors = Map.of(
     "rectangleCenter", RectangleCenter.class,
     "rectangleCorner", RectangleCorner.class,
@@ -66,11 +69,22 @@ public class MenuController {
     "cube", Cube.class
   );
 
+  private final Map<String, Class<? extends Shape>> shapes = Map.of(
+    "Brush", Brush.class,
+    "Cube", Cube.class,
+    "Ellipse", EllipseCorner.class,
+    "Line", Line.class,
+    "LineEllipse", LineEllipse.class,
+    "Point", Point.class,
+    "Rectangle", RectangleCorner.class
+  );
+
   private boolean isPrimary(final MouseEvent event) {
     return event.getButton().equals(MouseButton.PRIMARY);
   }
 
   private void processEvent(final Shape shape, final RadioMenuItem item) {
+    final var editor = Editor.getInstance();
     anchorPane.setOnMousePressed((event) -> {
       if (isPrimary(event) && item.isSelected()) {
         editor.add(shape);
@@ -121,6 +135,46 @@ public class MenuController {
     Fill.getInstance().setFill(!fill);
   }
 
+  private void drawShape(String name, final List<Double> coords) {
+    final var exists = shapes.containsKey(name);
+    if (!exists) return;
+    final var constructor = shapes.get(name);
+    try {
+      final var declared = constructor.getDeclaredConstructor(List.class);
+      final var shape = declared.newInstance(coords);
+      Editor.getInstance().addToCanvas(shape);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  @FXML
+  private void open() {
+    final var stage = (Stage)borderPane.getScene().getWindow();
+    final var fileChooser = new FileChooser();
+    final var extention = new FileChooser.ExtensionFilter("Text Files", "*.txt");
+    fileChooser.getExtensionFilters().add(extention);
+    final var file = fileChooser.showOpenDialog(stage);
+    try (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
+      Editor.getInstance().reset();
+      while (true) {
+        final var line = reader.readLine();
+        if (line == null) return;
+        final var columns = line.split("\\s+");
+        final var name = columns[0];
+        final var numbers = new ArrayList<Double>();
+        for (int index = 1; index < columns.length; index++) {
+          final var column = columns[index];
+          final var number = Double.parseDouble(column);
+          numbers.add(number);
+        }
+        drawShape(name, numbers);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
   private void addColors() {
     final var items = new ArrayList<MenuItem>();
     for (final var color: Color.getInstance().getStringColors()) {
@@ -167,20 +221,17 @@ public class MenuController {
     }
   }
 
-  @SuppressWarnings("unused")
   @FXML
   private void initialize() {
     canvas.widthProperty().bind(anchorPane.widthProperty());
     canvas.heightProperty().bind(anchorPane.heightProperty());
     addColors();
     addItemsEvenets(objectsMenu);
-    editor = Editor.getInstance().setCanvas(canvas);
-    borderPane.sceneProperty().addListener((property) -> {
+    final var editor = Editor.getInstance().setCanvas(canvas);
+    borderPane.sceneProperty().addListener((_) -> {
       final var scene = borderPane.getScene();
       scene.setOnKeyPressed((event) -> {
-        if (event.isControlDown() && (event.getCode() == KeyCode.Z)) {
-          editor.removeLast();
-        };
+        if (event.isControlDown() && (event.getCode() == KeyCode.Z)) editor.pop();
     });
     });
   }
