@@ -179,9 +179,7 @@ public class MenuController {
       final var scene = borderPane.getScene();
       scene.setOnKeyPressed((event) -> {
         if (event.isControlDown() && (event.getCode() == KeyCode.Z)) {
-          editor.pop();
-          editor.clear();
-          editor.drawAll();
+          editor.removeLast();
         };
     });
     });

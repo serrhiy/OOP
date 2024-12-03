@@ -25,6 +25,8 @@ public class Main extends Application {
     final var scene = new Scene(root);
     stage.setScene(scene);
     stage.setTitle(titleTable);
+    stage.setWidth(width);
+    stage.setHeight(height);
     stage.show();
     return stage;
   }

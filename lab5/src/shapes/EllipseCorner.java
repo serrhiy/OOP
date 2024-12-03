@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.util.Pair;
 
 public class EllipseCorner extends Shape implements Ellipsable {
 
@@ -33,5 +34,17 @@ public class EllipseCorner extends Shape implements Ellipsable {
     coords.set(1, (y1 + y2 - dy) / 2);
     coords.set(2, dx);
     coords.set(3, dy);
+  }
+
+  @Override
+  public Pair<Pair<Double, Double>, Pair<Double, Double>> getDisplayCoords() {
+    final var first = new Pair<>(coords.get(0), coords.get(1));
+    final var second = new Pair<>(coords.get(2), coords.get(3));
+    return new Pair<>(first, second);
+  }
+
+  @Override
+  public String getName() {
+    return "Ellipse";
   }
 }

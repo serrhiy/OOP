@@ -3,6 +3,7 @@ package shapes;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import java.util.List;
+import javafx.util.Pair;
 
 public abstract class Shape {
   protected List<Double> coords;
@@ -23,4 +24,6 @@ public abstract class Shape {
   public void onStart(GraphicsContext context, double x, double y) {
     
   }
+  public abstract Pair<Pair<Double, Double>, Pair<Double, Double>> getDisplayCoords();
+  public abstract String getName();
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.util.Pair;
 
 public class Cube extends Shape implements Linable, Rectangable {
 
@@ -37,5 +38,17 @@ public class Cube extends Shape implements Linable, Rectangable {
     coords.set(1, Math.min(y1, y2));
     coords.set(2, Math.abs(x2 - x1));
     coords.set(3, Math.abs(y2 - y1));
+  }
+
+  @Override
+  public Pair<Pair<Double, Double>, Pair<Double, Double>> getDisplayCoords() {
+    final var first = new Pair<>(coords.get(0), coords.get(1));
+    final var second = new Pair<>(coords.get(2), coords.get(3));
+    return new Pair<>(first, second);
+  }
+
+  @Override
+  public String getName() {
+    return "Cube";
   }
 }

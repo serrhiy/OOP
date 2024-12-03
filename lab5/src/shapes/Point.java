@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.util.Pair;
 
 public class Point extends Shape {
 
@@ -31,5 +32,18 @@ public class Point extends Shape {
   public void setCoords(double x1, double y1, double x2, double y2) {
     coords.set(0, x2);
     coords.set(1, y2);
+  }
+
+  @Override
+  public Pair<Pair<Double, Double>, Pair<Double, Double>> getDisplayCoords() {
+    final var x = coords.get(0);
+    final var y = coords.get(1);
+    final var point = new Pair<>(x, y);
+    return new Pair<>(point, point);
+  }
+
+  @Override
+  public String getName() {
+    return "Point";
   }
 }

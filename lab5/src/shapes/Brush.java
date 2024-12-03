@@ -3,6 +3,7 @@ package shapes;
 import java.util.ArrayList;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.util.Pair;
 
 public class Brush extends Shape {
 
@@ -37,5 +38,21 @@ public class Brush extends Shape {
   public void setCoords(double x1, double y1, double x2, double y2) {
     coords.add(x2);
     coords.add(y2);
+  }
+
+  @Override
+  public Pair<Pair<Double, Double>, Pair<Double, Double>> getDisplayCoords() {
+    final var x1 = coords.get(0);
+    final var y1 = coords.get(1);
+    final var x2 = coords.get(coords.size() - 2);
+    final var y2 = coords.get(coords.size() - 1);
+    final var first = new Pair<>(x1, y1);
+    final var second = new Pair<>(x2, y2);
+    return new Pair<>(first, second);
+  }
+
+  @Override
+  public String getName() {
+    return "Brush";
   }
 }
