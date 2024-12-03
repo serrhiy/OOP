@@ -1,5 +1,6 @@
 package shapes;
 
+import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.util.Pair;
@@ -7,7 +8,7 @@ import javafx.util.Pair;
 public class Point extends Shape {
 
   public Point() {
-    this(List.of(0.0, 0.0));
+    this(new ArrayList<Double>(List.of(0.0, 0.0)));
   }
 
   public Point(final List<Double> coords) {
