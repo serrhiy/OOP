@@ -36,4 +36,7 @@ public abstract class Shape {
   }
   public abstract Pair<Pair<Double, Double>, Pair<Double, Double>> getDisplayCoords();
   public abstract String getName();
+  public List<Double> getCoords() {
+    return List.copyOf(coords);
+  }
 }

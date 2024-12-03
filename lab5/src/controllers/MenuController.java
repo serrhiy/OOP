@@ -11,15 +11,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToolBar;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.MenuItem;
 import javafx.application.Platform;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.input.KeyCode;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -29,8 +29,6 @@ import settings.Color;
 import settings.Fill;
 import shapes.*;
 import java.util.Map;
-
-import javax.imageio.ImageIO;
 
 import editors.Editor;
 
@@ -116,10 +114,20 @@ public class MenuController {
     savefile.setTitle("Save File");
     final var file = savefile.showSaveDialog(stage);
     if (file == null) return;
-    final var writableImage = new WritableImage((int)canvas.getWidth(), (int)canvas.getHeight());
-    canvas.snapshot(null, writableImage);
-    final var renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
-    ImageIO.write(renderedImage, "png", file);
+    final var filewriter = new FileWriter(file, false);
+    try (BufferedWriter writer = new BufferedWriter(filewriter)) {
+      final var shapes = Editor.getInstance().shapes();
+      for (final var shape: shapes) {
+        writer.write(shape.getName() + " ");
+        final var coords = shape.getCoords();
+        for (final var coord: coords) {
+          writer.write(String.valueOf(coord) + " ");
+        }
+        writer.newLine();
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   @FXML
@@ -155,6 +163,7 @@ public class MenuController {
     final var extention = new FileChooser.ExtensionFilter("Text Files", "*.txt");
     fileChooser.getExtensionFilters().add(extention);
     final var file = fileChooser.showOpenDialog(stage);
+    if (file == null) return;
     try (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
       Editor.getInstance().reset();
       while (true) {

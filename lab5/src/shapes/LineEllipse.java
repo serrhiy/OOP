@@ -68,6 +68,6 @@ public class LineEllipse extends Shape implements Linable, Ellipsable {
 
   @Override
   public String getName() {
-    return "Line Ellipse";
+    return "LineEllipse";
   }
 }

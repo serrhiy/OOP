@@ -53,7 +53,6 @@ public class TableController {
       final var pair = shape.getDisplayCoords();
       final var first = pair.getKey();
       final var second = pair.getValue();
-      System.out.println(first.getKey() + " " + first.getValue() + " " + second.getKey() + " " + second.getValue());
       final var point = new PointPair(
         shape.getName(),
         first.getKey(),

@@ -121,4 +121,8 @@ public class Editor {
     clear();
     return this;
   }
+
+  public List<Shape> shapes() {
+    return List.copyOf(shapes);
+  }
 }
