@@ -176,11 +176,11 @@ public class MenuController {
     borderPane.sceneProperty().addListener((property) -> {
       final var scene = borderPane.getScene();
       scene.setOnKeyPressed((event) -> {
-      if (event.isControlDown() && (event.getCode() == KeyCode.Z)) {
-        editor.pop();
-        editor.clear();
-        editor.drawAll();
-      };
+        if (event.isControlDown() && (event.getCode() == KeyCode.Z)) {
+          editor.pop();
+          editor.clear();
+          editor.drawAll();
+        };
     });
     });
   }
