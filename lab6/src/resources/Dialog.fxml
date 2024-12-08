@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="237.0" prefWidth="496.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DialogController">
+   <children>
+      <Text layoutX="168.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Data" wrappingWidth="159.0654296875">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Text>
+      <Text layoutX="80.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="N" wrappingWidth="24.0654296875">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Text>
+      <Text layoutX="221.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min" wrappingWidth="52.0654296875">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Text>
+      <Text layoutX="373.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Max" wrappingWidth="62.0654296875">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Text>
+      <TextField fx:id="nField" layoutX="22.0" layoutY="150.0" prefHeight="24.0" prefWidth="140.0" />
+      <TextField fx:id="minField" layoutX="178.0" layoutY="150.0" prefHeight="24.0" prefWidth="140.0" />
+      <TextField fx:id="maxField" layoutX="334.0" layoutY="150.0" prefHeight="24.0" prefWidth="140.0" />
+      <Button onAction="#ok" layoutX="401.0" layoutY="188.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="69.0" text="Ok" />
+      <Button onAction="#cancel" layoutX="327.0" layoutY="188.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="69.0" text="Cancel" />
+   </children>
+</AnchorPane>

@@ -6,21 +6,21 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.Label?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
-            </items>
-          </Menu>
-          <Menu>
-            <graphic>
-              <Label text="Start" onMouseClicked="#start"/>
-            </graphic>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </top>
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
+  <top>
+    <MenuBar BorderPane.alignment="CENTER">
+      <menus>
+         <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
+          </items>
+        </Menu>
+        <Menu>
+          <graphic>
+            <Label text="Start" onMouseClicked="#start"/>
+          </graphic>
+        </Menu>
+      </menus>
+    </MenuBar>
+  </top>
 </BorderPane>
