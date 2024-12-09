@@ -5,6 +5,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import java.util.Map;
 import org.json.JSONObject;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -52,13 +55,15 @@ public class MainController {
       for (int index = 0; index < n; index++) {
         numbers.add(new Number(index + 1, random(min, max)));
       }
-      final var message = Map.of(
-        "receiver", "manager",
-        "service", "log",
-        "data", json.toString()
-      );
-
-      System.out.print(new JSONObject(message).toString());
+      Platform.runLater(() -> {
+        final var data = numbers.stream().map((num) -> num.getNumber().getValue()).toList();
+        final var clipboard = Clipboard.getSystemClipboard();
+        final var content = new ClipboardContent();
+        final var clipboardContent = new JSONObject(Map.of("data", data));
+        content.putString(clipboardContent.toString());
+        clipboard.clear();
+        clipboard.setContent(content);
+      });
     });
   }
 }
