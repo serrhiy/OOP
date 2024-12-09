@@ -31,6 +31,9 @@ public class DialogController {
     final var n = nField.getText();
     final var min = minField.getText();
     final var max = maxField.getText();
+    nField.setText("");
+    minField.setText("");
+    maxField.setText("");
     try {
       final var json = new JSONObject();
       json.put("service", "data");
@@ -41,6 +44,7 @@ public class DialogController {
       data.put("max", max);
       json.put("data", data);
       System.out.print(json.toString());
+      cancel();
     } catch (Exception e) {
       e.printStackTrace();
     }

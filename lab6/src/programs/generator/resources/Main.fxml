@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Text layoutX="216.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello world">
-         <font>
-            <Font size="30.0" />
-         </font>
-      </Text>
-   </children>
-</AnchorPane>
+<TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22" fx:controller="controllers.MainController">
+  <columns>
+    <TableColumn fx:id="columnIndex" prefWidth="150.0" text="Index" />
+    <TableColumn fx:id="columnNumber" prefWidth="150.0" text="Number" />
+  </columns>
+</TableView>

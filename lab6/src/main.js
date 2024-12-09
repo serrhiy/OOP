@@ -32,6 +32,7 @@ const manageProcesses = (project) => {
   const processes = new Map();
   const manager = (name) => {
     const subprocess = execute(name);
+    subprocess.stderr.pipe(process.stderr);
     processes.set(name, subprocess);
     subprocess.stdout.setEncoding('utf-8');
     subprocess.stdout.setDefaultEncoding('utf-8');
