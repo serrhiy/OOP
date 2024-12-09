@@ -4,7 +4,9 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-
+import org.json.JSONObject;
+import java.util.Map;
+import listeners.InputStreamListener;
 
 public class Main extends Application {
 
@@ -26,5 +28,14 @@ public class Main extends Application {
     stage.setHeight(height);
     stage.setTitle(title);
     stage.show();
+    final var listener = InputStreamListener.getInstance();
+    listener.on("data", (json) -> {
+      final var message = Map.of(
+        "receiver", "manager",
+        "service", "log",
+        "data", json.toString()
+      );
+      System.out.print(new JSONObject(message).toString());
+    });
   }
 }

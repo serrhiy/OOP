@@ -33,7 +33,7 @@ public class DialogController {
     final var max = maxField.getText();
     try {
       final var json = new JSONObject();
-      json.put("service", "create");
+      json.put("service", "data");
       json.put("receiver", "generator");
       final var data = new JSONObject();
       data.put("n", n);
