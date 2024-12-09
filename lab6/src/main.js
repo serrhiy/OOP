@@ -43,6 +43,9 @@ const manageProcesses = async (mainProcess) => {
     const message = JSON.stringify({ service: 'close' });
     mainProcess.stdin.write(message + '\n');
   });
+  mainProcess.on('exit', async () => {
+    await fsp.rm(config.target, { recursive: true, force: true });
+  });
 };
 
 const main = asyncPipe(compileProject, execute, manageProcesses);
