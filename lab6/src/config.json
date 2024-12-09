@@ -1,0 +1,11 @@
+{
+  "mainProject": "main",
+  "mainFile": "Main",
+  "libs": [
+    "--module-path=/home/serhii/programming/code/java/libs/javafx/lib:/home/serhii/programming/code/java/libs/javax/lib/",
+    "--add-modules=javafx.controls,javafx.fxml,org.json"
+  ],
+  "target": "bin",
+  "programsFolder": "programs",
+  "resourcesFolder": "resources"
+}
