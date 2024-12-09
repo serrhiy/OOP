@@ -40,7 +40,7 @@ const manageProcesses = async (mainProcess) => {
     //   const subprocess = execute(receiver);
     //   processes.set(receiver, subprocess);
     // }
-    const message = JSON.stringify({ 'service': 'close' });
+    const message = JSON.stringify({ service: 'close' });
     mainProcess.stdin.write(message + '\n');
   });
 };

@@ -4,10 +4,7 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.concurrent.CompletableFuture;
-import org.json.JSONObject;
+import listeners.InputStreamListener;
 
 public class Main extends Application {
 
@@ -29,20 +26,7 @@ public class Main extends Application {
     stage.setHeight(height);
     stage.setTitle(title);
     stage.show();
-    CompletableFuture.runAsync(() -> {
-      final var isReader = new InputStreamReader(System.in);
-      try (final var reader = new BufferedReader(isReader)) {
-        while (true) {
-          final var line = reader.readLine();
-          if (line == null) continue;
-          final var json = new JSONObject(line);
-          if (json.getString("service").equals("close")) {
-            Platform.runLater(stage::close);
-          }
-        }
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-    });
+    final var listener = InputStreamListener.getInstance();
+    listener.on("close", (_) -> Platform.runLater(stage::close));
   }
 }
