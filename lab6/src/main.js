@@ -7,51 +7,60 @@ const fsp = require('node:fs/promises');
 const execute = require('./execute.js')(config);
 const compile = require('./compile.js')(config, find);
 const moveResources = require('./moveResources.js')(config, exists);
+const events = require('node:events');
 
-const { programsFolder, mainProject } = config;
-
-const asyncPipe = (...functions) => {
+const pipe = (...functions) => {
   const next = (value, index = 0) => {
     if (index >= functions.length) return value;
     const answer = functions[index](value);
     const callback = (arg) => next(arg, index + 1);
     return answer.then ? answer.then(callback) : callback(answer);
   };
-  return next;
+  return (value) => next(value);
 };
 
 const compileProject = async () => {
-  const programs = await fsp.readdir(programsFolder);
+  const programs = await fsp.readdir(config.programsFolder);
   const compiles = programs.map(compile);
   const copies = programs.map(moveResources);
   await Promise.all(compiles);
   await Promise.all(copies);
 };
 
-const manageProcesses = (project) => {
+const manageProcesses = async (project) => {
   const processes = new Map();
-  const manager = (name) => {
-    const subprocess = execute(name);
-    subprocess.stderr.pipe(process.stderr);
+  const manager = async (name) => {
+    const subprocess = await execute(name);
     processes.set(name, subprocess);
+    subprocess.stderr.pipe(process.stderr);
     subprocess.stdout.setEncoding('utf-8');
     subprocess.stdout.setDefaultEncoding('utf-8');
-    subprocess.stdout.on('data', (chunk) => {
-      const { service, receiver, data } = JSON.parse(chunk);      
-      if (receiver === 'manager' && service === 'log') {
-        return void console.log(data);
+    const subprocesses = new Set();
+    subprocess.stdout.on('data', async (chunk) => {
+      const { service, receiver, data } = JSON.parse(chunk);
+      if (!processes.has(receiver)) {
+        subprocesses.add(await manager(receiver));
       }
-      if (!processes.has(receiver)) manager(receiver);
       const subprocess = processes.get(receiver);
-      const message = JSON.stringify({ service, data });      
+      const message = JSON.stringify({ service, data });
       subprocess.stdin.write(message + '\n');
     });
-    subprocess.on('exit', () => void processes.delete(name));
-    return manager;
+    subprocess.once('close', () => {
+      processes.delete(name);
+      for (const subprocess of subprocesses) {
+        subprocess.kill();
+      }
+    });
+    return subprocess;
   };
   return manager(project);
 };
 
-const main = asyncPipe(compileProject, () => manageProcesses(mainProject));
+const main = pipe(
+  compileProject,
+  () => manageProcesses(config.mainProject),
+  (mainProcess) => events.once(mainProcess, 'close'),
+  () => fsp.rm(config.target, { recursive: true, force: true })
+);
 
 main();

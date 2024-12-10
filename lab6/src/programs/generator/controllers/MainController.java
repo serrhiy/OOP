@@ -53,7 +53,7 @@ public class MainController {
       final var max = json.getDouble("max");
       final var n = json.getInt("n");
       for (int index = 0; index < n; index++) {
-        numbers.add(new Number(index + 1, random(min, max)));
+        numbers.add(new Number(index, random(min, max)));
       }
       Platform.runLater(() -> {
         final var data = numbers.stream().map((num) -> num.getNumber().getValue()).toList();

@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('node:path');
+const { once } = require('node:events');
 const child_process = require('node:child_process');
 
 module.exports = (config) => {
@@ -8,6 +9,7 @@ module.exports = (config) => {
   return (project = mainProject) => {
     const fullpath = path.join(target, project);
     const args = ['-cp', fullpath, ...libs, mainFile];
-    return child_process.spawn('java', args);
+    const process = child_process.spawn('java', args);
+    return once(process, 'spawn').then(() => process);
   };
 };
