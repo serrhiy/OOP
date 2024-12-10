@@ -1,0 +1,3 @@
+javac --module-path=/home/serhii/programming/code/java/libs/javafx/lib:/home/serhii/programming/code/java/libs/javax/lib/ --add-modules=javafx.controls,javafx.fxml,org.json Main.java controllers/MainController.java
+java --module-path=/home/serhii/programming/code/java/libs/javafx/lib:/home/serhii/programming/code/java/libs/javax/lib/ --add-modules=javafx.controls,javafx.fxml,org.json Main.java
+find . -name '*.class' -type f -exec rm {} \;
