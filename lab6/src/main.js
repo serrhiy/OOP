@@ -46,6 +46,7 @@ const manageProcesses = (project) => {
       const message = JSON.stringify({ service, data });      
       subprocess.stdin.write(message + '\n');
     });
+    subprocess.on('exit', () => void processes.delete(name));
     return manager;
   };
   return manager(project);

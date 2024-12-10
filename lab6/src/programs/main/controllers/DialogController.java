@@ -31,6 +31,14 @@ public class DialogController {
     final var n = nField.getText();
     final var min = minField.getText();
     final var max = maxField.getText();
+    final var isNumber = "[+-]?\\d+(\\.\\d+)?";
+    final var isNumbers = (
+      n.matches("^\\d+$") &&
+      min.matches(isNumber) &&
+      max.matches(isNumber)
+    );
+    if (!isNumbers) return;
+    if (Double.parseDouble(min) >= Double.parseDouble(max)) return;
     nField.setText("");
     minField.setText("");
     maxField.setText("");

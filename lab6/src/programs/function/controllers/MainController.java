@@ -6,12 +6,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.Clipboard;
 import javafx.util.Pair;
-
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import org.json.JSONObject;
+import listeners.InputStreamListener;
 
 public class MainController {
   @FXML
@@ -95,37 +95,40 @@ public class MainController {
 
   @FXML
   private void initialize() {
-    Platform.runLater(() -> {
-      final var clipboard = Clipboard.getSystemClipboard();
-      final var content = clipboard.getString();
-      final var json = getJson(content);
-      if (json == null || !json.has("data")) return;
-      final var data = json.getJSONArray("data");
-      final var min = json.getDouble("min");
-      final var max = json.getDouble("max");
-
-      final var points = new ArrayList<Double>();
-      for (final var point: data) {
-        final var number = Double.valueOf(point.toString());
-        points.add(number);
-      }
-      final var absMax = Math.max(Math.abs(min), Math.abs(max));
-      drawAxes(points.size(), (int)Math.ceil(absMax));
-      final var width = canvas.getWidth();
-      final var height = canvas.getHeight();
-      final var widthLength = width - 2 * padding;
-      final var step = widthLength / (points.size() - 1);
-      final var normalisedPoints = new ArrayList<Pair<Double, Double>>();
-      final var minimum = height - padding + (min + absMax) * (2 * padding - height) / (2 * absMax);
-      final var maximum = height - padding + (max + absMax) * (2 * padding - height) / (2 * absMax);
-      for (int index = 0; index < points.size(); index++) {
-        final var y = points.get(index);
-        final var xPos = index * step + padding;
-        final var yPos = minimum + (y - min) * (maximum - minimum) / (max - min);
-        final var point = new Pair<>(xPos, yPos);
-        normalisedPoints.add(point);
-      }
-      curwe(normalisedPoints);
+    final var listener = InputStreamListener.getInstance();
+    listener.on("data", (_) -> {
+      Platform.runLater(() -> {
+        final var clipboard = Clipboard.getSystemClipboard();
+        final var content = clipboard.getString();
+        final var json = getJson(content);
+        if (json == null || !json.has("data")) return;
+        final var data = json.getJSONArray("data");
+        final var min = json.getDouble("min");
+        final var max = json.getDouble("max");
+        final var points = new ArrayList<Double>();
+        for (final var point: data) {
+          final var number = Double.valueOf(point.toString());
+          points.add(number);
+        }
+        final var absMax = Math.max(Math.abs(min), Math.abs(max));
+        final var width = canvas.getWidth();
+        final var height = canvas.getHeight();
+        canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawAxes(points.size(), (int)Math.ceil(absMax));
+        final var widthLength = width - 2 * padding;
+        final var step = widthLength / (points.size() - 1);
+        final var normalisedPoints = new ArrayList<Pair<Double, Double>>();
+        final var minimum = height - padding + (min + absMax) * (2 * padding - height) / (2 * absMax);
+        final var maximum = height - padding + (max + absMax) * (2 * padding - height) / (2 * absMax);
+        for (int index = 0; index < points.size(); index++) {
+          final var y = points.get(index);
+          final var xPos = index * step + padding;
+          final var yPos = minimum + (y - min) * (maximum - minimum) / (max - min);
+          final var point = new Pair<>(xPos, yPos);
+          normalisedPoints.add(point);
+        }
+        curwe(normalisedPoints);
+      });
     });
   }
 }
