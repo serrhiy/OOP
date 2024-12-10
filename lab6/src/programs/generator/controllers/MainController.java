@@ -51,7 +51,7 @@ public class MainController {
       numbers.clear();
       final var min = json.getDouble("min");
       final var max = json.getDouble("max");
-      final var n = json.getNumber("n").intValue();
+      final var n = json.getInt("n");
       for (int index = 0; index < n; index++) {
         numbers.add(new Number(index + 1, random(min, max)));
       }
@@ -59,10 +59,15 @@ public class MainController {
         final var data = numbers.stream().map((num) -> num.getNumber().getValue()).toList();
         final var clipboard = Clipboard.getSystemClipboard();
         final var content = new ClipboardContent();
-        final var clipboardContent = new JSONObject(Map.of("data", data));
+        final var clipboardContent = new JSONObject(Map.of("data", data, "max", max, "min", min));
         content.putString(clipboardContent.toString());
         clipboard.clear();
         clipboard.setContent(content);
+        final var message = Map.of(
+          "receiver", "function",
+          "service", "data"
+        );
+        System.out.print(new JSONObject(message).toString());
       });
     });
   }

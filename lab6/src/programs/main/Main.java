@@ -21,7 +21,6 @@ public class Main extends Application {
   public void start(Stage stage) throws Exception {
     final BorderPane root = FXMLLoader.load(getClass().getResource(pathToView));
     stage.setScene(new Scene(root));
-    stage.setTitle(title);
     stage.setWidth(width);
     stage.setHeight(height);
     stage.setTitle(title);
