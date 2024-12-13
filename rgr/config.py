@@ -12,7 +12,7 @@ class Config:
     for key, value in config.items():
       data = Config(value) if isinstance(value, dict) else value
       setattr(self, key, data)
-  
+
   def to_dict(self):
     result = {}
     for key, value in self.__dict__.items():

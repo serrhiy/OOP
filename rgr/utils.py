@@ -5,6 +5,4 @@ def create_window(config):
   root = tk.Tk()
   root.geometry('%dx%d' % (window.width, window.height))
   root.title(window.title)
-  canvas = tk.Canvas(root, config.canvas.to_dict())
-  canvas.pack(fill=tk.BOTH, expand=True)
-  return (root, canvas)
+  return root

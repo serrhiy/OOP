@@ -5,7 +5,7 @@
     "title": "Raster Graphic Editor"
   },
   "canvas": {
-    "bg": "black",
+    "bg": "white",
     "borderwidth": 0,
     "highlightthickness": 0
   }
