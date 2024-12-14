@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.canvas.Canvas?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
+  <top>
+    <MenuBar id="menuBar" BorderPane.alignment="CENTER">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Save as..." />
+            <MenuItem mnemonicParsing="false" text="Open..." />
+            <MenuItem mnemonicParsing="false" onAction="#exit" text="Close" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Settings">
+          <items>
+            <Menu fx:id="colors" mnemonicParsing="false" onAction="#colors" text="Colors">
+              <items>
+              </items>
+            </Menu>
+            <RadioMenuItem mnemonicParsing="false" onAction="#fill" text="Fill" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+  </top>
+   <center>
+    <BorderPane BorderPane.alignment="CENTER">
+      <top>
+        <ToolBar BorderPane.alignment="CENTER" fx:id="toolBar">
+          <items>
+            <Button id="rectangle-button" mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/rectangle.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Rectangle" />
+              </tooltip>
+            </Button>
+            <Button id="ellipse-button" mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/ellipse.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Ellipse Center" />
+              </tooltip>
+            </Button>
+            <Button id="line-button" mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/line.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Line" />
+              </tooltip>
+            </Button>
+            <Button id="brush-button" mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/brush.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Brush" />
+              </tooltip>
+            </Button>
+          </items>
+        </ToolBar>
+      </top>
+      <center>
+        <AnchorPane fx:id="anchorPane" BorderPane.alignment="CENTER">
+          <Canvas fx:id="canvas" />
+        </AnchorPane>
+      </center>
+    </BorderPane>
+   </center>
+</BorderPane>
