@@ -4,6 +4,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import shapes.Shape;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,6 +15,7 @@ public class Editor {
   private static final Editor instance = new Editor();
   private Canvas canvas = null;
   private GraphicsContext context = null;
+  private Color color = Color.BLACK;
 
   public static Editor getInstance() { return instance; }
 
@@ -21,14 +23,19 @@ public class Editor {
     context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
   }
 
+  private void drawShape(final Shape shape) {
+    context.setStroke(shape.color);
+    shape.draw(context);
+  }
+
   private void redraw() {
     clear();
-    for (final var shape: shapes) shape.draw(context);
+    for (final var shape: shapes) drawShape(shape);
   }
 
   private void drawDashes(final Shape shape) {
     context.setLineDashes(10);
-    shape.draw(context);
+    drawShape(shape);
     context.setLineDashes(0);
   }
 
@@ -49,6 +56,7 @@ public class Editor {
     try {
       final var declared = constructor.getDeclaredConstructor(double.class, double.class);
       final var shape = declared.newInstance(event.getX(), event.getY());
+      shape.color = this.color;
       canvas.setOnMouseDragged((info) -> onMove(info, shape));
       canvas.setOnMouseReleased((_) -> onRelease(shape));
     } catch (Exception e) {
@@ -60,7 +68,7 @@ public class Editor {
     shape.update(event.getX(), event.getY());
     redraw();
     if (shape.useDashes) drawDashes(shape);
-    else shape.draw(context);
+    else drawShape(shape);
   }
 
   private void onRelease(final Shape shape) {
@@ -82,6 +90,11 @@ public class Editor {
   public Editor add(final Shape shape) {
     shapes.add(shape);
     redraw();
+    return this;
+  }
+
+  public Editor changeColor(final Color color) {
+    this.color = color;
     return this;
   }
 }

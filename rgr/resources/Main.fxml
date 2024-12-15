@@ -10,6 +10,8 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.canvas.Canvas?>
 
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
@@ -88,6 +90,11 @@
                 <Tooltip text="Brush" />
               </tooltip>
             </Button>
+            <ColorPicker onAction="#changeColor" fx:id="colorPicker" id="colorPicker">
+              <value>
+                <Color />
+              </value>
+            </ColorPicker>
           </items>
         </ToolBar>
       </top>

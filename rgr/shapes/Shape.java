@@ -3,10 +3,12 @@ package shapes;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public abstract class Shape {
 
   public boolean useDashes = true;
+  public Color color = Color.BLACK;
   protected final List<Double> coords;
 
   public Shape(final List<Double> coords) {
