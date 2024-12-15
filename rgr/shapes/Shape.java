@@ -6,6 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 public abstract class Shape {
 
+  public boolean useDashes = true;
   protected final List<Double> coords;
 
   public Shape(final List<Double> coords) {
@@ -20,5 +21,5 @@ public abstract class Shape {
 
   public abstract Shape update(final double x, final double y);
 
-  public abstract void draw(final GraphicsContext canvas);
+  public abstract void draw(final GraphicsContext context);
 }

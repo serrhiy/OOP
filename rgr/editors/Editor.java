@@ -20,6 +20,12 @@ public class Editor {
     for (final var shape: shapes) shape.draw(context);
   }
 
+  protected void drawDashes(final Shape shape) {
+    context.setLineDashes(10);
+    shape.draw(context);
+    context.setLineDashes(0);
+  }
+
   public Editor start(final Canvas canvas, final EventEmitter<Class<? extends Shape>> events) {
     this.canvas = canvas;
     this.context = canvas.getGraphicsContext2D();
@@ -33,12 +39,14 @@ public class Editor {
       try {
         final var declared = constructor.getDeclaredConstructor(double.class, double.class);
         final var shape = declared.newInstance(event.getX(), event.getY());
-        shapes.add(shape);
         canvas.setOnMouseDragged((info) -> {
           shape.update(info.getX(), info.getY());
           redraw();
+          if (shape.useDashes) drawDashes(shape);
+          else shape.draw(context);
         });
         canvas.setOnMouseReleased((_) -> {
+          shapes.add(shape);
           redraw();
           events.emit("shape", constructor);
         });

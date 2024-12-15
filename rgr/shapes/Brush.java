@@ -8,10 +8,11 @@ public class Brush extends shapes.Shape {
 
   public Brush(final List<Double> coords) {
     super(coords);
+    useDashes = false;
   }
 
   public Brush(final double x, final double y) {
-    super(List.of(x, y));
+    this(List.of(x, y));
   }
 
   @Override
