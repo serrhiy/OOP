@@ -38,9 +38,7 @@ public class Editor {
           shape.update(info.getX(), info.getY());
           redraw();
         });
-        canvas.setOnMouseReleased((info) -> {
-          shape.update(info.getX(), info.getY());
-          shape.draw(context);
+        canvas.setOnMouseReleased((_) -> {
           redraw();
           events.emit("shape", constructor);
         });

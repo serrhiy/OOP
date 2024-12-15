@@ -33,7 +33,8 @@ public class MenuController {
   private final Map<String, Class<? extends Shape>> shapes = Map.of(
     "line", Line.class,
     "ellipse", Ellipse.class,
-    "rectangle", Rectangle.class
+    "rectangle", Rectangle.class,
+    "brush", Brush.class
   );
 
   @FXML

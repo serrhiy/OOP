@@ -11,7 +11,6 @@ public class Main extends Application {
   private final double width = 900;
   private final double height = 900;
 
-
   static void main(String[] args) {
     launch(args);
   }
