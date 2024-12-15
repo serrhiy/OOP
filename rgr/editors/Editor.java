@@ -25,8 +25,8 @@ public class Editor {
   }
 
   private void drawShape(final Shape shape) {
-    context.setLineWidth(shape.width);
-    context.setStroke(shape.color);
+    context.setLineWidth(shape.getConfig().getWidth());
+    context.setStroke(shape.getConfig().getColor());
     shape.draw(context);
   }
 
@@ -58,8 +58,8 @@ public class Editor {
     try {
       final var declared = constructor.getDeclaredConstructor(double.class, double.class);
       final var shape = declared.newInstance(event.getX(), event.getY());
-      shape.color = this.color;
-      shape.width = this.width;
+      shape.getConfig().setColor(color);
+      shape.getConfig().setWidth(width);
       canvas.setOnMouseDragged((info) -> onMove(info, shape));
       canvas.setOnMouseReleased((_) -> onRelease(shape));
     } catch (Exception e) {
@@ -90,8 +90,9 @@ public class Editor {
     return this;
   }
 
-  public Editor add(final Shape shape) {
-    shapes.add(shape);
+  public Editor replace(final List<Shape> shapes) {
+    this.shapes.clear();
+    this.shapes.addAll(shapes);
     redraw();
     return this;
   }

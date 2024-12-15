@@ -13,14 +13,15 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.MenuItem;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import org.json.JSONObject;
+
 import javafx.application.Platform;
 import settings.Color;
 import settings.Fill;
@@ -71,55 +72,42 @@ public class MenuController {
     final var file = savefile.showSaveDialog(stage);
     if (file == null) return;
     final var filewriter = new FileWriter(file, false);
-    try (BufferedWriter writer = new BufferedWriter(filewriter)) {
-      writer.write(stage.getWidth() + " " + stage.getHeight());
-      writer.newLine();
+    try (final var writer = new BufferedWriter(filewriter)) {
       final var shapes = Editor.getInstance().shapes();
-      for (final var shape: shapes) {
-        final var name = shape.getClass().getSimpleName();
-        writer.write(name + " ");
-        final var coords = shape.getCoords();
-        for (final var coord: coords) {
-          writer.write(String.valueOf(coord) + " ");
-        }
-        writer.newLine();
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
+      final var result = new JSONObject();
+      final var window = new JSONObject();
+      final var data = ShapeParser.serialise(shapes);
+      window.put("width", stage.getWidth());
+      window.put("height", stage.getHeight());
+      result.put("window", window);
+      result.put("shapes", data);
+      writer.write(result.toString());
+      
+    } catch (final Exception exception) {
+      exception.printStackTrace();
     }
   }
 
   @FXML
-  private void open() throws IOException {
+  private void open() {
     final var stage = (Stage)borderPane.getScene().getWindow();
     final var fileChooser = new FileChooser();
-    final var extention = new FileChooser.ExtensionFilter("Text Files", "*.txt");
+    final var extention = new FileChooser.ExtensionFilter("JSON Files", "*.json");
     fileChooser.getExtensionFilters().add(extention);
     final var file = fileChooser.showOpenDialog(stage);
     if (file == null) return;
-    final var editor = Editor.getInstance().restore();
-    try (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
-      final var header = reader.readLine().split("\\s+");
-      final var width = Double.parseDouble(header[0]);
-      final var height = Double.parseDouble(header[1]);
+    try {
+      final var bytes = Files.readAllBytes(file.toPath());
+      final var text = new String(bytes);
+      final var json = new JSONObject(text);
+      final var window = json.getJSONObject("window");
+      final var shapes = json.getJSONArray("shapes");
+      final var width = window.getDouble("width");
+      final var height = window.getDouble("height");
+      final var newshapes = ShapeParser.parse(shapes);
       stage.setWidth(width);
       stage.setHeight(height);
-      while (true) {
-        final var line = reader.readLine();
-        if (line == null) return;
-        final var columns = line.split("\\s+");
-        final var name = columns[0];
-        final var numbers = new ArrayList<Double>();
-        for (int index = 1; index < columns.length; index++) {
-          final var column = columns[index];
-          final var number = Double.parseDouble(column);
-          numbers.add(number);
-        }
-        final var constructor = this.shapes.get(name.toString().toLowerCase());
-        final var declared = constructor.getDeclaredConstructor(List.class);
-        final var shape = declared.newInstance(numbers);
-        editor.add(shape);
-      }
+      Editor.getInstance().replace(newshapes);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -157,6 +145,7 @@ public class MenuController {
 
   @FXML
   private void fill() {
+    System.out.println(ShapeParser.serialise(Editor.getInstance().shapes()));
     final var stage = (Stage)borderPane.getScene().getWindow();
     System.out.println(stage.getWidth());
     final var fill =  Fill.getInstance().getFill();
