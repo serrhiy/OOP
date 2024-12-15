@@ -6,6 +6,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import shapes.Shape;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Editor {
@@ -16,12 +17,16 @@ public class Editor {
 
   public static Editor getInstance() { return instance; }
 
-  private void redraw() {
+  private void clear() {
     context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+  }
+
+  private void redraw() {
+    clear();
     for (final var shape: shapes) shape.draw(context);
   }
 
-  protected void drawDashes(final Shape shape) {
+  private void drawDashes(final Shape shape) {
     context.setLineDashes(10);
     shape.draw(context);
     context.setLineDashes(0);
@@ -64,5 +69,19 @@ public class Editor {
     newShape(shape.getClass());
   }
 
-  public List<Shape> shapes() { return new ArrayList<>(shapes); }
+  public List<Shape> shapes() {
+    return Collections.unmodifiableList(shapes);
+  }
+
+  public Editor restore() {
+    shapes.clear();
+    clear();
+    return this;
+  }
+
+  public Editor add(final Shape shape) {
+    shapes.add(shape);
+    redraw();
+    return this;
+  }
 }

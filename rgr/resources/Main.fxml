@@ -9,7 +9,6 @@
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.canvas.Canvas?>
 
@@ -20,7 +19,7 @@
         <Menu mnemonicParsing="false" text="File">
           <items>
             <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save as..." />
-            <MenuItem mnemonicParsing="false" text="Open..." />
+            <MenuItem mnemonicParsing="false" onAction="#open" text="Open..." />
             <MenuItem mnemonicParsing="false" onAction="#exit" text="Close" />
           </items>
         </Menu>
@@ -37,7 +36,7 @@
     </MenuBar>
   </top>
    <center>
-    <BorderPane BorderPane.alignment="CENTER">
+    <BorderPane fx:id="pane" BorderPane.alignment="CENTER">
       <top>
         <ToolBar BorderPane.alignment="CENTER" fx:id="toolBar">
           <items>
@@ -93,9 +92,7 @@
         </ToolBar>
       </top>
       <center>
-        <AnchorPane fx:id="anchorPane" BorderPane.alignment="CENTER">
-          <Canvas fx:id="canvas" />
-        </AnchorPane>
+        <Canvas fx:id="canvas" />
       </center>
     </BorderPane>
    </center>

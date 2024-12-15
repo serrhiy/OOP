@@ -2,7 +2,6 @@ package controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -12,9 +11,13 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.MenuItem;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import javafx.application.Platform;
 import settings.Color;
@@ -25,9 +28,9 @@ import editors.Editor;
 public class MenuController {
 
   @FXML private BorderPane borderPane;
-  @FXML private AnchorPane anchorPane;
-  @FXML private Menu colors;
+  @FXML private BorderPane pane;
   @FXML private Canvas canvas;
+  @FXML private Menu colors;
   @FXML private ToolBar toolBar;
 
   @FXML
@@ -51,7 +54,7 @@ public class MenuController {
     if (file == null) return;
     final var filewriter = new FileWriter(file, false);
     try (BufferedWriter writer = new BufferedWriter(filewriter)) {
-      writer.write(canvas.getWidth() + " " + canvas.getHeight());
+      writer.write(stage.getWidth() + " " + stage.getHeight());
       writer.newLine();
       final var shapes = Editor.getInstance().shapes();
       for (final var shape: shapes) {
@@ -63,15 +66,51 @@ public class MenuController {
         }
         writer.newLine();
       }
-    } catch (IOException e) {
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  @FXML
+  private void open() throws IOException {
+    final var stage = (Stage)borderPane.getScene().getWindow();
+    final var fileChooser = new FileChooser();
+    final var extention = new FileChooser.ExtensionFilter("Text Files", "*.txt");
+    fileChooser.getExtensionFilters().add(extention);
+    final var file = fileChooser.showOpenDialog(stage);
+    if (file == null) return;
+    final var editor = Editor.getInstance().restore();
+    try (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
+      final var header = reader.readLine().split("\\s+");
+      final var width = Double.parseDouble(header[0]);
+      final var height = Double.parseDouble(header[1]);
+      stage.setWidth(width);
+      stage.setHeight(height);
+      while (true) {
+        final var line = reader.readLine();
+        if (line == null) return;
+        final var columns = line.split("\\s+");
+        final var name = columns[0];
+        final var numbers = new ArrayList<Double>();
+        for (int index = 1; index < columns.length; index++) {
+          final var column = columns[index];
+          final var number = Double.parseDouble(column);
+          numbers.add(number);
+        }
+        final var constructor = this.shapes.get(name.toString().toLowerCase());
+        final var declared = constructor.getDeclaredConstructor(List.class);
+        final var shape = declared.newInstance(numbers);
+        editor.add(shape);
+      }
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
   @FXML
   private void initialize() {
-    canvas.widthProperty().bind(anchorPane.widthProperty());
-    canvas.heightProperty().bind(anchorPane.heightProperty());
+    canvas.widthProperty().bind(borderPane.widthProperty());
+    canvas.heightProperty().bind(borderPane.heightProperty());
     final var items = toolBar.getItems();
     final var editor = Editor.getInstance().start(canvas);
     for (final var pair: shapes.entrySet()) {
@@ -98,6 +137,8 @@ public class MenuController {
 
   @FXML
   private void fill() {
+    final var stage = (Stage)borderPane.getScene().getWindow();
+    System.out.println(stage.getWidth());
     final var fill =  Fill.getInstance().getFill();
     Fill.getInstance().setFill(!fill);
   }
