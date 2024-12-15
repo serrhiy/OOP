@@ -31,7 +31,6 @@ import editors.Editor;
 public class MenuController {
 
   @FXML private BorderPane borderPane;
-  @FXML private BorderPane pane;
   @FXML private Canvas canvas;
   @FXML private Menu colors;
   @FXML private ToolBar toolBar;
@@ -120,7 +119,7 @@ public class MenuController {
     canvas.widthProperty().bind(borderPane.widthProperty());
     canvas.heightProperty().bind(borderPane.heightProperty());
     final var items = toolBar.getItems();
-    final var editor = Editor.getInstance().start(canvas);
+    final var editor = Editor.getInstance().start(canvas, borderPane);
     for (final var pair: shapes.entrySet()) {
       final var name = pair.getKey();
       final var Constructor = pair.getValue();

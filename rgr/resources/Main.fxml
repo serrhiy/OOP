@@ -39,7 +39,7 @@
     </MenuBar>
   </top>
    <center>
-    <BorderPane fx:id="pane" BorderPane.alignment="CENTER">
+    <BorderPane BorderPane.alignment="CENTER">
       <top>
         <ToolBar BorderPane.alignment="CENTER" fx:id="toolBar">
           <items>

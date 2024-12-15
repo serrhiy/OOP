@@ -2,8 +2,10 @@ package editors;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import shapes.Shape;
 import java.util.ArrayList;
@@ -41,9 +43,16 @@ public class Editor {
     context.setLineDashes(0);
   }
 
-  public Editor start(final Canvas canvas) {
+  public Editor start(final Canvas canvas, final Pane root) {
     this.canvas = canvas;
     this.context = canvas.getGraphicsContext2D();
+    root.setOnKeyPressed((event) -> {
+      final var isCtrl = event.isControlDown();
+      final var isZ = event.getCode() == KeyCode.Z;
+      if (!(isCtrl && isZ) || shapes.isEmpty()) return;
+      shapes.removeLast();
+      redraw();
+    });
     return this;
   }
 
