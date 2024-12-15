@@ -7,14 +7,12 @@ import javafx.scene.input.MouseEvent;
 import shapes.Shape;
 import java.util.ArrayList;
 import java.util.List;
-import events.EventEmitter;
 
 public class Editor {
   private final List<Shape> shapes = new ArrayList<>();
   private static final Editor instance = new Editor();
   private Canvas canvas = null;
   private GraphicsContext context = null;
-  private EventEmitter<Class<? extends Shape>> events = null;
 
   public static Editor getInstance() { return instance; }
 
@@ -29,15 +27,13 @@ public class Editor {
     context.setLineDashes(0);
   }
 
-  public Editor start(final Canvas canvas, final EventEmitter<Class<? extends Shape>> events) {
+  public Editor start(final Canvas canvas) {
     this.canvas = canvas;
     this.context = canvas.getGraphicsContext2D();
-    this.events = events;
-    events.on("shape", this::onNewShape);
     return this;
   }
 
-  private void onNewShape(final Class<? extends Shape> constructor) {
+  public void newShape(final Class<? extends Shape> constructor) {
     canvas.setOnMousePressed((event) -> {
       if (!event.getButton().equals(MouseButton.PRIMARY)) return;
       onClick(event, constructor);
@@ -65,6 +61,6 @@ public class Editor {
   private void onRelease(final Shape shape) {
     shapes.add(shape);
     redraw();
-    events.emit("shape", shape.getClass());
+    newShape(shape.getClass());
   }
 }

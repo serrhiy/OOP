@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.MenuItem;
-import events.EventEmitter;
 import java.util.Map;
 import javafx.application.Platform;
 import settings.Color;
@@ -42,8 +41,7 @@ public class MenuController {
     canvas.widthProperty().bind(anchorPane.widthProperty());
     canvas.heightProperty().bind(anchorPane.heightProperty());
     final var items = toolBar.getItems();
-    final var emitter = new EventEmitter<Class<? extends Shape>>();
-    Editor.getInstance().start(canvas, emitter);
+    final var editor = Editor.getInstance().start(canvas);
     for (final var pair: shapes.entrySet()) {
       final var name = pair.getKey();
       final var Constructor = pair.getValue();
@@ -54,7 +52,7 @@ public class MenuController {
       }
       if (button == null) continue;
       button.setOnAction((_) -> {
-        emitter.emit("shape", Constructor);
+        editor.newShape(Constructor);
       });
     }
   }
