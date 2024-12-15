@@ -63,4 +63,6 @@ public class Editor {
     redraw();
     newShape(shape.getClass());
   }
+
+  public List<Shape> shapes() { return new ArrayList<>(shapes); }
 }

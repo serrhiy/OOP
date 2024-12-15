@@ -4,11 +4,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.MenuItem;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Map;
 import javafx.application.Platform;
 import settings.Color;
@@ -35,6 +41,32 @@ public class MenuController {
     "rectangle", Rectangle.class,
     "brush", Brush.class
   );
+
+  @FXML
+  private void saveAs() throws IOException {
+    final var stage = (Stage)borderPane.getScene().getWindow();
+    final var savefile = new FileChooser();
+    savefile.setTitle("Save File");
+    final var file = savefile.showSaveDialog(stage);
+    if (file == null) return;
+    final var filewriter = new FileWriter(file, false);
+    try (BufferedWriter writer = new BufferedWriter(filewriter)) {
+      writer.write(canvas.getWidth() + " " + canvas.getHeight());
+      writer.newLine();
+      final var shapes = Editor.getInstance().shapes();
+      for (final var shape: shapes) {
+        final var name = shape.getClass().getSimpleName();
+        writer.write(name + " ");
+        final var coords = shape.getCoords();
+        for (final var coord: coords) {
+          writer.write(String.valueOf(coord) + " ");
+        }
+        writer.newLine();
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
   @FXML
   private void initialize() {
