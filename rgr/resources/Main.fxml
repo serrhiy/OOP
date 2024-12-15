@@ -13,6 +13,7 @@
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.ChoiceBox?>
 
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
   <top>
@@ -95,6 +96,7 @@
                 <Color />
               </value>
             </ColorPicker>
+            <ChoiceBox onAction="#changeWidth" id="choiceWidth" fx:id="choiceWidth" prefWidth="50.0" />
           </items>
         </ToolBar>
       </top>

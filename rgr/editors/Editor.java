@@ -16,6 +16,7 @@ public class Editor {
   private Canvas canvas = null;
   private GraphicsContext context = null;
   private Color color = Color.BLACK;
+  private int width = 1;
 
   public static Editor getInstance() { return instance; }
 
@@ -24,6 +25,7 @@ public class Editor {
   }
 
   private void drawShape(final Shape shape) {
+    context.setLineWidth(shape.width);
     context.setStroke(shape.color);
     shape.draw(context);
   }
@@ -57,6 +59,7 @@ public class Editor {
       final var declared = constructor.getDeclaredConstructor(double.class, double.class);
       final var shape = declared.newInstance(event.getX(), event.getY());
       shape.color = this.color;
+      shape.width = this.width;
       canvas.setOnMouseDragged((info) -> onMove(info, shape));
       canvas.setOnMouseReleased((_) -> onRelease(shape));
     } catch (Exception e) {
@@ -95,6 +98,11 @@ public class Editor {
 
   public Editor changeColor(final Color color) {
     this.color = color;
+    return this;
+  }
+
+  public Editor changeWidth(final int width) {
+    this.width = width;
     return this;
   }
 }

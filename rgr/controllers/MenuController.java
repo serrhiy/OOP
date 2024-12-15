@@ -7,6 +7,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Menu;
 import javafx.scene.control.ToolBar;
@@ -34,6 +35,7 @@ public class MenuController {
   @FXML private Menu colors;
   @FXML private ToolBar toolBar;
   @FXML private ColorPicker colorPicker;
+  @FXML private ChoiceBox<Integer> choiceWidth;
 
   @FXML
   private void exit() {
@@ -46,6 +48,14 @@ public class MenuController {
     "rectangle", Rectangle.class,
     "brush", Brush.class
   );
+
+  private final List<Integer> widths = List.of(1, 2, 3, 4, 5, 6, 7, 8);
+
+  @FXML
+  private void changeWidth(final ActionEvent event) {
+    final var width = choiceWidth.getValue();
+    Editor.getInstance().changeWidth(width);
+  }
 
   @FXML
   private void changeColor(final ActionEvent event) {
@@ -117,6 +127,8 @@ public class MenuController {
 
   @FXML
   private void initialize() {
+    choiceWidth.getItems().addAll(widths);
+    choiceWidth.setValue(widths.get(0));
     canvas.widthProperty().bind(borderPane.widthProperty());
     canvas.heightProperty().bind(borderPane.heightProperty());
     final var items = toolBar.getItems();

@@ -9,6 +9,7 @@ public abstract class Shape {
 
   public boolean useDashes = true;
   public Color color = Color.BLACK;
+  public int width = 3;
   protected final List<Double> coords;
 
   public Shape(final List<Double> coords) {
