@@ -1,7 +1,9 @@
 package editors;
+
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import shapes.Shape;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ public class Editor {
   private static final Editor instance = new Editor();
   private Canvas canvas = null;
   private GraphicsContext context = null;
+  private EventEmitter<Class<? extends Shape>> events = null;
 
   public static Editor getInstance() { return instance; }
 
@@ -29,30 +32,39 @@ public class Editor {
   public Editor start(final Canvas canvas, final EventEmitter<Class<? extends Shape>> events) {
     this.canvas = canvas;
     this.context = canvas.getGraphicsContext2D();
-    events.on("shape", (constructor) -> onNewShape(constructor, events));
+    this.events = events;
+    events.on("shape", this::onNewShape);
     return this;
   }
 
-  private void onNewShape(final Class<? extends Shape> constructor, final EventEmitter<Class<? extends Shape>> events) {
+  private void onNewShape(final Class<? extends Shape> constructor) {
     canvas.setOnMousePressed((event) -> {
       if (!event.getButton().equals(MouseButton.PRIMARY)) return;
-      try {
-        final var declared = constructor.getDeclaredConstructor(double.class, double.class);
-        final var shape = declared.newInstance(event.getX(), event.getY());
-        canvas.setOnMouseDragged((info) -> {
-          shape.update(info.getX(), info.getY());
-          redraw();
-          if (shape.useDashes) drawDashes(shape);
-          else shape.draw(context);
-        });
-        canvas.setOnMouseReleased((_) -> {
-          shapes.add(shape);
-          redraw();
-          events.emit("shape", constructor);
-        });
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
+      onClick(event, constructor);
     });
+  }
+
+  private void onClick(final MouseEvent event, final Class<? extends Shape> constructor) {
+    try {
+      final var declared = constructor.getDeclaredConstructor(double.class, double.class);
+      final var shape = declared.newInstance(event.getX(), event.getY());
+      canvas.setOnMouseDragged((info) -> onMove(info, shape));
+      canvas.setOnMouseReleased((_) -> onRelease(shape));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  private void onMove(final MouseEvent event, final Shape shape) {
+    shape.update(event.getX(), event.getY());
+    redraw();
+    if (shape.useDashes) drawDashes(shape);
+    else shape.draw(context);
+  }
+
+  private void onRelease(final Shape shape) {
+    shapes.add(shape);
+    redraw();
+    events.emit("shape", shape.getClass());
   }
 }
