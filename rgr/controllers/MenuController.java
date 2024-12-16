@@ -12,8 +12,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Menu;
 import javafx.scene.control.ToolBar;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
@@ -33,6 +32,7 @@ public class MenuController {
   @FXML private ToolBar toolBar;
   @FXML private ColorPicker colorPicker;
   @FXML private ChoiceBox<Integer> choiceWidth;
+  @FXML private Menu savers;
 
   @FXML
   private void exit() {
@@ -44,6 +44,11 @@ public class MenuController {
     "ellipse", Ellipse.class,
     "rectangle", Rectangle.class,
     "brush", Brush.class
+  );
+
+  private final Map<String, TriConsumer<File, Stage, Canvas>> extensions = Map.of(
+    "json", FileSaver::json,
+    "png", FileSaver::png
   );
 
   private final List<Integer> widths = List.of(1, 2, 3, 4, 5, 6, 7, 8);
@@ -63,24 +68,18 @@ public class MenuController {
   @FXML
   private void saveAs() throws IOException {
     final var stage = (Stage)borderPane.getScene().getWindow();
-    final var savefile = new FileChooser();
-    savefile.setTitle("Save File");
-    final var file = savefile.showSaveDialog(stage);
-    if (file == null) return;
-    final var filewriter = new FileWriter(file, false);
-    try (final var writer = new BufferedWriter(filewriter)) {
-      final var shapes = Editor.getInstance().shapes();
-      final var result = new JSONObject();
-      final var window = new JSONObject();
-      final var data = ShapeParser.serialise(shapes);
-      window.put("width", stage.getWidth());
-      window.put("height", stage.getHeight());
-      result.put("window", window);
-      result.put("shapes", data);
-      writer.write(result.toString());
-    } catch (final Exception exception) {
-      exception.printStackTrace();
+    final var fileChooser = new FileChooser();
+    for (final var extention: extensions.keySet()) {
+      final var name = "Select " + extention.toUpperCase() + " File";
+      final var filter = new FileChooser.ExtensionFilter(name, "*." + extention);
+      fileChooser.getExtensionFilters().add(filter);
     }
+    final var file = fileChooser.showSaveDialog(stage);
+    if (file == null) return;
+    final var extention = FileSaver.extention(file.getName());
+    if (!extensions.containsKey(extention)) return;
+    final var saver = extensions.get(extention);
+    saver.accept(file, stage, canvas);
   }
 
   @FXML
