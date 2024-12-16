@@ -60,11 +60,17 @@ public class Editor {
   public Editor start(final Canvas canvas, final Pane root) {
     this.canvas = canvas;
     this.context = canvas.getGraphicsContext2D();
+    root.setOnMousePressed((event) -> {
+      if (!isPrimaryButton(event)) return;
+      selected.clear();
+      redraw();
+    });
     root.addEventFilter(KeyEvent.KEY_PRESSED, (event) -> {
       final var isCtrl = event.isControlDown();
       final var isZ = event.getCode().equals(KeyCode.Z);
       if (!(isCtrl && isZ) || shapes.isEmpty()) return;
-      shapes.removeLast();
+      final var shape = shapes.removeLast();
+      if (selected.contains(shape)) selected.remove(shape);
       redraw();
     });
     root.addEventFilter(KeyEvent.KEY_PRESSED, (event) -> {
@@ -147,11 +153,21 @@ public class Editor {
 
   public Editor changeColor(final Color color) {
     this.color = color;
+    for (final var shape: selected) {
+      shape.getConfig().setColor(color);
+    }
+    selected.clear();
+    redraw();
     return this;
   }
 
   public Editor changeWidth(final int width) {
     this.width = width;
+    for (final var shape: selected) {
+      shape.getConfig().setWidth(width);
+    }
+    selected.clear();
+    redraw();
     return this;
   }
 }

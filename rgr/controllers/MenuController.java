@@ -110,12 +110,12 @@ public class MenuController {
 
   @FXML
   private void initialize() {
+    final var editor = Editor.getInstance().start(canvas, borderPane);
     choiceWidth.getItems().addAll(widths);
     choiceWidth.setValue(widths.get(0));
     canvas.widthProperty().bind(borderPane.widthProperty());
     canvas.heightProperty().bind(borderPane.heightProperty());
     final var items = toolBar.getItems();
-    final var editor = Editor.getInstance().start(canvas, borderPane);
     for (final var pair: shapes.entrySet()) {
       final var name = pair.getKey();
       final var Constructor = pair.getValue();
