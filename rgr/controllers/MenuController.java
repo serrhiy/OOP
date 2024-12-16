@@ -11,7 +11,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Menu;
 import javafx.scene.control.ToolBar;
-import javafx.scene.control.MenuItem;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -23,8 +22,6 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import javafx.application.Platform;
-import settings.Color;
-import settings.Fill;
 import shapes.*;
 import editors.Editor;
 
@@ -132,21 +129,5 @@ public class MenuController {
         editor.newShape(Constructor);
       });
     }
-  }
-
-  @FXML
-  private void colors(final ActionEvent event) {
-    final var item = (MenuItem)event.getTarget();
-    final var text = item.getText();
-    Color.getInstance().setColor(text);
-  }
-
-  @FXML
-  private void fill() {
-    System.out.println(ShapeParser.serialise(Editor.getInstance().shapes()));
-    final var stage = (Stage)borderPane.getScene().getWindow();
-    System.out.println(stage.getWidth());
-    final var fill =  Fill.getInstance().getFill();
-    Fill.getInstance().setFill(!fill);
   }
 }

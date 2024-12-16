@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.RadioMenuItem?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
@@ -24,15 +23,6 @@
             <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save as..." />
             <MenuItem mnemonicParsing="false" onAction="#open" text="Open..." />
             <MenuItem mnemonicParsing="false" onAction="#exit" text="Close" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Settings">
-          <items>
-            <Menu fx:id="colors" mnemonicParsing="false" onAction="#colors" text="Colors">
-              <items>
-              </items>
-            </Menu>
-            <RadioMenuItem mnemonicParsing="false" onAction="#fill" text="Fill" />
           </items>
         </Menu>
       </menus>
