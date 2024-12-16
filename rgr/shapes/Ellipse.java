@@ -35,4 +35,21 @@ public class Ellipse extends shapes.Shape {
     final var y = (y1 + y2 - dy) / 2;
     context.strokeOval(x, y, dx + width, dy + width);
   }
+
+  @Override
+  public boolean contains(double x, double y) {
+    final var x1 = coords.get(0);
+    final var y1 = coords.get(1);
+    final var x2 = coords.get(2);
+    final var y2 = coords.get(3);
+    final var center_x = (x1 + x2) / 2;
+    final var center_y = (y1 + y2) / 2;
+    final var a = x2 - center_x;
+    final var b = y2 - center_y;
+    final var first = ((x - center_x) * (x - center_x)) / (a * a);
+    final var second = ((y - center_y) * (y - center_y)) / (b * b);
+    final var sum = first + second;
+    final var delta = config.getWidth() / 100.0 * 2;
+    return Math.abs(1 - sum) < delta;
+  }
 }

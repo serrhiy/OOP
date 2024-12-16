@@ -58,7 +58,13 @@ public class Editor {
 
   public void newShape(final Class<? extends Shape> constructor) {
     canvas.setOnMousePressed((event) -> {
-      if (!event.getButton().equals(MouseButton.PRIMARY)) return;
+      if (!event.getButton().equals(MouseButton.PRIMARY)) {
+        for (final var shape: shapes) {
+          final var contains = shape.contains(event.getX(), event.getY());
+          if (contains) System.out.println(contains);
+        }
+        return;
+      }
       onClick(event, constructor);
     });
   }
@@ -69,8 +75,14 @@ public class Editor {
       final var shape = declared.newInstance(event.getX(), event.getY());
       shape.getConfig().setColor(color);
       shape.getConfig().setWidth(width);
-      canvas.setOnMouseDragged((info) -> onMove(info, shape));
-      canvas.setOnMouseReleased((_) -> onRelease(shape));
+      canvas.setOnMouseDragged((info) -> {
+        if (!info.getButton().equals(MouseButton.PRIMARY)) return;
+        onMove(info, shape);
+      });
+      canvas.setOnMouseReleased((info) -> {
+        if (!info.getButton().equals(MouseButton.PRIMARY)) return;
+        onRelease(shape);
+      });
     } catch (Exception e) {
       e.printStackTrace();
     }

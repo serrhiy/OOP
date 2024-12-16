@@ -30,4 +30,6 @@ public abstract class Shape {
   public abstract Shape update(final double x, final double y);
 
   public abstract void draw(final GraphicsContext context);
+
+  public abstract boolean contains(final double x, final double y);
 }

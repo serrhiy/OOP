@@ -81,7 +81,6 @@ public class MenuController {
       result.put("window", window);
       result.put("shapes", data);
       writer.write(result.toString());
-      
     } catch (final Exception exception) {
       exception.printStackTrace();
     }
