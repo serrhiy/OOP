@@ -107,6 +107,9 @@ public class Editor {
       canvas.setOnMouseReleased((info) -> {
         if (!isPrimaryButton(info)) return;
         onRelease(shape);
+        canvas.setOnMouseDragged(null);
+        canvas.setOnMouseReleased(null);
+        canvas.setOnMousePressed(null);
       });
     } catch (Exception e) {
       e.printStackTrace();
@@ -123,7 +126,6 @@ public class Editor {
   private void onRelease(final Shape shape) {
     shapes.add(shape);
     redraw();
-    newShape(shape.getClass());
   }
 
   public List<Shape> shapes() {
