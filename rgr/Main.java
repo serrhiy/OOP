@@ -1,6 +1,7 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 
@@ -22,6 +23,7 @@ public class Main extends Application {
     stage.setHeight(height);
     stage.setScene(scene);
     stage.setTitle(titleMain);
+    scene.setFill(Color.WHITE);
     stage.show();
   }
 }

@@ -2,12 +2,14 @@ package editors;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import shapes.Shape;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,11 +24,14 @@ public class Editor {
   private Color color = Color.BLACK;
   private int width = 1;
   private final double selectedK = 2;
+  private Image background = null;
 
   public static Editor getInstance() { return instance; }
 
   private void clear() {
     context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    context.setFill(Color.WHITE);
+    context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
   }
 
   private void drawShape(final Shape shape, double k) {
@@ -41,6 +46,9 @@ public class Editor {
 
   private void redraw() {
     clear();
+    if (background != null) {
+      context.drawImage(background, 0, 0);
+    }
     for (final var shape: shapes) {
       final var k = selected.contains(shape) ? selectedK : 1;
       drawShape(shape, k);
@@ -57,11 +65,28 @@ public class Editor {
     return event.getButton().equals(MouseButton.PRIMARY);
   }
 
+  public void setBacground(final Image image) {
+    final var stage = (Stage)canvas.getScene().getWindow();
+    final var imageWidth = image.getWidth();
+    final var imageHeight = image.getHeight();
+    final var headerHeight = stage.getHeight() - canvas.getHeight();
+    final var stageHeight = imageHeight + headerHeight;
+    this.background = image;
+    if (stage.getHeight() == stageHeight && stage.getWidth() == imageWidth) {
+      redraw();
+      return;
+    }
+    stage.setHeight(stageHeight);
+    stage.setWidth(imageWidth);
+  }
+
   public Editor start(final Canvas canvas, final Pane root) {
     this.canvas = canvas;
     this.context = canvas.getGraphicsContext2D();
+    canvas.widthProperty().addListener((_) -> redraw());
+    canvas.heightProperty().addListener((_) -> redraw());
     root.setOnMousePressed((event) -> {
-      if (!isPrimaryButton(event)) return;
+      if (!isPrimaryButton(event) || selected.size() > 0) return;
       selected.clear();
       redraw();
     });
