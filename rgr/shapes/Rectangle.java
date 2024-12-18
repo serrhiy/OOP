@@ -21,7 +21,7 @@ public class Rectangle extends shapes.Shape {
   }
 
   @Override
-  public void draw(GraphicsContext context) {
+  public void draw(final GraphicsContext context) {
     final var x1 = coords.get(0);
     final var y1 = coords.get(1);
     final var x2 = coords.get(2);
@@ -34,7 +34,7 @@ public class Rectangle extends shapes.Shape {
   }
 
   @Override
-  public boolean contains(double x, double y) {
+  public boolean contains(final double x, final double y) {
     final var x1 = coords.get(0);
     final var y1 = coords.get(1);
     final var x2 = coords.get(2);

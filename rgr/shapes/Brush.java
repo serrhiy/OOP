@@ -16,14 +16,14 @@ public class Brush extends shapes.Shape {
   }
 
   @Override
-  public Shape update(double x, double y) {
+  public Shape update(final double x, final double y) {
     coords.add(x);
     coords.add(y);
     return this;
   }
 
   @Override
-  public void draw(GraphicsContext context) {
+  public void draw(final GraphicsContext context) {
     final var size = coords.size();
     if (size == 2) {
       final var width = config.getWidth();
@@ -41,7 +41,7 @@ public class Brush extends shapes.Shape {
   }
 
   @Override
-  public boolean contains(double x, double y) {
+  public boolean contains(final double x, final double y) {
     final var size = coords.size();
     final var width = config.getWidth();
     for (int index = 4; index < size; index += 2) {

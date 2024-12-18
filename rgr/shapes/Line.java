@@ -15,7 +15,7 @@ public class Line extends shapes.Shape {
   }
 
   @Override
-  public Shape update(double x, double y) {
+  public Shape update(final double x, final double y) {
     coords.set(2, x);
     coords.set(3, y);
     return this;

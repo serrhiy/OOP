@@ -46,9 +46,7 @@ public class Editor {
 
   private void redraw() {
     clear();
-    if (background != null) {
-      context.drawImage(background, 0, 0);
-    }
+    if (background != null) context.drawImage(background, 0, 0);
     for (final var shape: shapes) {
       final var k = selected.contains(shape) ? selectedK : 1;
       drawShape(shape, k);
@@ -61,7 +59,7 @@ public class Editor {
     context.setLineDashes(0);
   }
 
-  private boolean isPrimaryButton(MouseEvent event) {
+  private static boolean isPrimaryButton(MouseEvent event) {
     return event.getButton().equals(MouseButton.PRIMARY);
   }
 

@@ -6,11 +6,8 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-
 import javax.imageio.ImageIO;
-
 import org.json.JSONObject;
-
 import editors.Editor;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.Canvas;

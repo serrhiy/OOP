@@ -15,7 +15,7 @@ public class Ellipse extends shapes.Shape {
   }
 
   @Override
-  public Shape update(double x, double y) {
+  public Shape update(final double x, final double y) {
     coords.set(2, x);
     coords.set(3, y);
     return this;
@@ -37,7 +37,7 @@ public class Ellipse extends shapes.Shape {
   }
 
   @Override
-  public boolean contains(double x, double y) {
+  public boolean contains(final double x, final double y) {
     final var x1 = coords.get(0);
     final var y1 = coords.get(1);
     final var x2 = coords.get(2);
