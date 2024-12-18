@@ -40,6 +40,10 @@ public class Rectangle extends shapes.Shape {
     final var y1 = coords.get(1);
     final var x2 = coords.get(2);
     final var y2 = coords.get(3);
+    if (config.getFill()) {
+      final var inside = x >= x1 && x <= x2 && y >= y1 && y <= y2;
+      if (inside) return inside;
+    }
     final var width = config.getWidth();
     final var up = Line.lineContaines(x1, y1, x2, y1, x, y, width);
     final var rt = Line.lineContaines(x2, y1, x2, y2, x, y, width);

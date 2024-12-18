@@ -50,6 +50,7 @@ public class Ellipse extends shapes.Shape {
     final var first = ((x - center_x) * (x - center_x)) / (a * a);
     final var second = ((y - center_y) * (y - center_y)) / (b * b);
     final var sum = first + second;
+    if (config.getFill()) return sum <= 1;
     final var delta = config.getWidth() / 100.0 * 2;
     return Math.abs(1 - sum) < delta;
   }
