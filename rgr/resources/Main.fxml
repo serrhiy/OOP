@@ -94,6 +94,18 @@
                 <Tooltip text="Directed Line" />
               </tooltip>
             </Button>
+            <Button id="bidirectedLine" mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/bidirectedLine.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Directed Line" />
+              </tooltip>
+            </Button>
             <ColorPicker onAction="#changeColor" fx:id="colorPicker" id="colorPicker">
               <value>
                 <Color />

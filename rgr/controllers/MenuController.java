@@ -41,7 +41,8 @@ public class MenuController {
     "ellipse", Ellipse.class,
     "rectangle", Rectangle.class,
     "brush", Brush.class,
-    "directedLine", DirectedLine.class
+    "directedLine", DirectedLine.class,
+    "bidirectedLine", BiDirectedLine.class
   );
 
   private final Map<String, Pair<TriConsumer<File, Stage, Canvas>,TriConsumer<File, Stage, Canvas>>> extensions = Map.of(
