@@ -22,13 +22,14 @@ public class ShapeParser {
     final var name = shape.getString("name");
     final var width = shape.getInt("width");
     final var color = shape.getString("color");
+    final var fill = shape.getBoolean("fill");
     final var numbers = shape.getJSONArray("coords");
     final var coords = new ArrayList<Double>();
     for (final var number: numbers) {
       final var coord = Double.parseDouble(number.toString());
       coords.add(coord);
     }
-    final var config = new ShapeConfig(Color.valueOf(color), width);
+    final var config = new ShapeConfig(Color.valueOf(color), width, fill);
     return new Pair<>(new Pair<>(config, name), coords);
   }
 
@@ -61,6 +62,7 @@ public class ShapeParser {
     item.put("name", name);
     item.put("width", config.getWidth());
     item.put("color", config.getColor().toString());
+    item.put("fill", config.getFill());
     item.put("coords", shape.getCoords());
     return item;
   }

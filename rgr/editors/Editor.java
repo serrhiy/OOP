@@ -25,6 +25,7 @@ public class Editor {
   private int width = 1;
   private final double selectedK = 2;
   private Image background = null;
+  private boolean fill = false;
 
   public static Editor getInstance() { return instance; }
 
@@ -35,8 +36,12 @@ public class Editor {
   }
 
   private void drawShape(final Shape shape, double k) {
-    context.setLineWidth(shape.getConfig().getWidth() * k);
-    context.setStroke(shape.getConfig().getColor());
+    final var config = shape.getConfig();
+    context.setLineWidth(config.getWidth() * k);
+    context.setStroke(config.getColor());
+    if (config.getFill()) {
+      context.setFill(config.getColor());
+    }
     shape.draw(context);
   }
 
@@ -127,8 +132,7 @@ public class Editor {
     try {
       final var declared = constructor.getDeclaredConstructor(double.class, double.class);
       final var shape = declared.newInstance(event.getX(), event.getY());
-      shape.getConfig().setColor(color);
-      shape.getConfig().setWidth(width);
+      shape.getConfig().setColor(color).setWidth(width).setFill(fill);
       canvas.setOnMouseDragged((info) -> {
         if (!isPrimaryButton(info)) return;
         onMove(info, shape);
@@ -188,6 +192,16 @@ public class Editor {
     this.width = width;
     for (final var shape: selected) {
       shape.getConfig().setWidth(width);
+    }
+    selected.clear();
+    redraw();
+    return this;
+  }
+
+  public Editor setFill(final boolean fill) {
+    this.fill = fill;
+    for (final var shape: selected) {
+      shape.getConfig().setFill(fill);
     }
     selected.clear();
     redraw();

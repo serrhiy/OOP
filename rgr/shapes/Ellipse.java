@@ -33,7 +33,8 @@ public class Ellipse extends shapes.Shape {
     final var dy = Math.abs(y2 - y1);
     final var x = (x1 + x2 - dx) / 2;
     final var y = (y1 + y2 - dy) / 2;
-    context.strokeOval(x, y, dx + width, dy + width);
+    if (config.getFill()) context.fillOval(x, y, dx + width, dy + width);
+    else context.strokeOval(x, y, dx + width, dy + width);
   }
 
   @Override

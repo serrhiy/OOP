@@ -20,6 +20,7 @@ import java.util.Map;
 import javafx.application.Platform;
 import shapes.*;
 import editors.Editor;
+import javafx.scene.control.ToggleButton;
 
 public class MenuController {
 
@@ -30,6 +31,7 @@ public class MenuController {
   @FXML private ChoiceBox<Integer> choiceWidth;
   @FXML private Menu savers;
   @FXML private BorderPane canvasPain;
+  @FXML private ToggleButton fillButton;
 
   @FXML
   private void exit() {
@@ -56,6 +58,14 @@ public class MenuController {
   private void changeWidth(final ActionEvent event) {
     final var width = choiceWidth.getValue();
     Editor.getInstance().changeWidth(width);
+  }
+
+  @FXML
+  private void onFill(final ActionEvent event) {
+    final var selected = fillButton.isSelected();
+    final var text = selected ? "Fill" : "No fill";
+    fillButton.setText(text);
+    Editor.getInstance().setFill(selected);
   }
 
   @FXML

@@ -30,7 +30,8 @@ public class Rectangle extends shapes.Shape {
     final var dy = Math.abs(y2 - y1);
     final var x = (x1 + x2 - dx) / 2;
     final var y = (y1 + y2 - dy) / 2;
-    context.strokeRect(x, y, dx, dy);
+    if (config.getFill()) context.fillRect(x, y, dx, dy);
+    else context.strokeRect(x, y, dx, dy);
   }
 
   @Override

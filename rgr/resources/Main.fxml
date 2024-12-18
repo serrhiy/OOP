@@ -14,6 +14,7 @@
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ToggleButton?>
 
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
   <top>
@@ -103,15 +104,16 @@
                 </ImageView>
               </graphic>
               <tooltip>
-                <Tooltip text="Directed Line" />
+                <Tooltip text="Bidirected Line" />
               </tooltip>
             </Button>
-            <ColorPicker onAction="#changeColor" fx:id="colorPicker" id="colorPicker">
+            <ToggleButton onAction="#onFill" id="fillButton" fx:id="fillButton" mnemonicParsing="false" prefHeight="40.0" text="Fill" />
+            <ColorPicker id="colorPicker" fx:id="colorPicker" onAction="#changeColor" prefHeight="40.0" prefWidth="145.0">
               <value>
                 <Color />
               </value>
             </ColorPicker>
-            <ChoiceBox onAction="#changeWidth" id="choiceWidth" fx:id="choiceWidth" prefWidth="50.0" />
+            <ChoiceBox id="choiceWidth" fx:id="choiceWidth" onAction="#changeWidth" prefHeight="40.0" prefWidth="50.0" />
           </items>
         </ToolBar>
       </top>
