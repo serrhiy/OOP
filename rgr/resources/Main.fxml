@@ -55,7 +55,7 @@
                 </ImageView>
               </graphic>
               <tooltip>
-                <Tooltip text="Ellipse Center" />
+                <Tooltip text="Ellipse" />
               </tooltip>
             </Button>
             <Button id="line" mnemonicParsing="false">
@@ -80,6 +80,18 @@
               </graphic>
               <tooltip>
                 <Tooltip text="Brush" />
+              </tooltip>
+            </Button>
+            <Button id="directedLine" mnemonicParsing="false">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0">
+                  <image>
+                    <Image url="@icons/directedLine.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Directed Line" />
               </tooltip>
             </Button>
             <ColorPicker onAction="#changeColor" fx:id="colorPicker" id="colorPicker">

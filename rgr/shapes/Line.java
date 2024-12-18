@@ -23,6 +23,7 @@ public class Line extends shapes.Shape {
 
   @Override
   public void draw(final GraphicsContext context) {
+    if (coords.size() < 4) return;
     context.strokeLine(coords.get(0), coords.get(1), coords.get(2), coords.get(3));
   }
 
