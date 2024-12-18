@@ -84,7 +84,7 @@ public class Editor {
     canvas.widthProperty().addListener((_) -> redraw());
     canvas.heightProperty().addListener((_) -> redraw());
     root.setOnMousePressed((event) -> {
-      if (!isPrimaryButton(event) || selected.size() > 0) return;
+      if (!isPrimaryButton(event) || selected.size() == 0) return;
       selected.clear();
       redraw();
     });
