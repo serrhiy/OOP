@@ -20,6 +20,7 @@ import javafx.application.Platform;
 import shapes.*;
 import editors.Editor;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ScrollPane;
 
 public class MainController {
 
@@ -29,6 +30,7 @@ public class MainController {
   @FXML private ColorPicker colorPicker;
   @FXML private ChoiceBox<Integer> choiceWidth;
   @FXML private ToggleButton fillButton;
+  @FXML private ScrollPane scrollPane;
 
   private Editor editor;
 

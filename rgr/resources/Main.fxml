@@ -19,7 +19,7 @@
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.paint.Color?>
 
-<BorderPane fx:controller="controllers.MainController" fx:id="borderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="controllers.MainController" fx:id="borderPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" minWidth="0" minHeight="0">
   <top>
     <BorderPane BorderPane.alignment="CENTER">
       <top>
@@ -123,7 +123,7 @@
     </BorderPane>
   </top>
   <center>
-    <ScrollPane BorderPane.alignment="CENTER" prefWidth="0" prefHeight="0" minWidth="0" minHeight="0">
+    <ScrollPane fx:id="scrollPane" BorderPane.alignment="CENTER" minWidth="0" minHeight="0">
       <content>
         <Canvas fx:id="canvas" />
       </content>
