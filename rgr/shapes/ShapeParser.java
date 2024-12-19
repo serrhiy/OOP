@@ -15,7 +15,9 @@ public class ShapeParser {
     Brush.class.getSimpleName(), Brush.class,
     Ellipse.class.getSimpleName(), Ellipse.class,
     Line.class.getSimpleName(), Line.class,
-    Rectangle.class.getSimpleName(), Rectangle.class
+    Rectangle.class.getSimpleName(), Rectangle.class,
+    DirectedLine.class.getSimpleName(), DirectedLine.class,
+    BiDirectedLine.class.getSimpleName(), BiDirectedLine.class
   );
 
   public static Pair<Pair<ShapeConfig, String>, List<Double>> parse(final JSONObject shape) {
