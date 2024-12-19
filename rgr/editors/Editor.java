@@ -7,7 +7,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import shapes.Shape;
@@ -16,18 +15,55 @@ import java.util.Collections;
 import java.util.List;
 
 public class Editor {
+  private static final double selectedK = 2;
   private final List<Shape> shapes = new ArrayList<>();
   private final List<Shape> selected = new ArrayList<>();
-  private static final Editor instance = new Editor();
-  private Canvas canvas = null;
-  private GraphicsContext context = null;
+  private final Canvas canvas;
+  private final GraphicsContext context;
   private Color color = Color.BLACK;
   private int width = 1;
-  private final double selectedK = 2;
   private Image background = null;
   private boolean fill = false;
 
-  public static Editor getInstance() { return instance; }
+  public Editor(final Canvas canvas) {
+    this.canvas = canvas;
+    this.context = canvas.getGraphicsContext2D();
+    canvas.widthProperty().addListener((_) -> redraw());
+    canvas.heightProperty().addListener((_) -> redraw());
+    canvas.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
+      final var isCtrl = event.isControlDown();
+      final var isZ = event.getCode().equals(KeyCode.Z);
+      if (!(isCtrl && isZ) || shapes.isEmpty()) return;
+      final var shape = shapes.removeLast();
+      if (selected.contains(shape)) selected.remove(shape);
+      redraw();
+    });
+    canvas.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
+      if (!event.getCode().equals(KeyCode.DELETE)) return;
+      for (final var shape: selected) shapes.remove(shape);
+      selected.clear();
+      redraw();
+    });
+    canvas.addEventFilter(MouseEvent.MOUSE_PRESSED, (event) -> {
+      if (isPrimaryButton(event)) {
+        if (selected.size() != 0) return; 
+        selected.clear();
+        redraw();
+      }
+      final var x = event.getX();
+      final var y = event.getY();
+      for (final var shape: shapes) {
+        final var contains = shape.contains(x, y);
+        if (!contains || selected.contains(shape)) continue;
+        selected.add(shape);
+        drawShape(shape, selectedK);
+      }
+    });
+  }
+
+  public Canvas getCanvas() {
+    return canvas;
+  }
 
   private void clear() {
     context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -81,44 +117,6 @@ public class Editor {
     }
     stage.setHeight(stageHeight);
     stage.setWidth(imageWidth);
-  }
-
-  public Editor start(final Canvas canvas, final Pane root) {
-    this.canvas = canvas;
-    this.context = canvas.getGraphicsContext2D();
-    canvas.widthProperty().addListener((_) -> redraw());
-    canvas.heightProperty().addListener((_) -> redraw());
-    root.setOnMousePressed((event) -> {
-      if (!isPrimaryButton(event) || selected.size() == 0) return;
-      selected.clear();
-      redraw();
-    });
-    root.addEventFilter(KeyEvent.KEY_PRESSED, (event) -> {
-      final var isCtrl = event.isControlDown();
-      final var isZ = event.getCode().equals(KeyCode.Z);
-      if (!(isCtrl && isZ) || shapes.isEmpty()) return;
-      final var shape = shapes.removeLast();
-      if (selected.contains(shape)) selected.remove(shape);
-      redraw();
-    });
-    root.addEventFilter(KeyEvent.KEY_PRESSED, (event) -> {
-      if (!event.getCode().equals(KeyCode.DELETE)) return;
-      for (final var shape: selected) shapes.remove(shape);
-      selected.clear();
-      redraw();
-    });
-    canvas.addEventFilter(MouseEvent.MOUSE_PRESSED, (event) -> {
-      if (isPrimaryButton(event)) return;
-      final var x = event.getX();
-      final var y = event.getY();
-      for (final var shape: shapes) {
-        final var contains = shape.contains(x, y);
-        if (!contains || selected.contains(shape)) continue;
-        selected.add(shape);
-        drawShape(shape, selectedK);
-      }
-    });
-    return this;
   }
 
   public void newShape(final Class<? extends Shape> constructor) {

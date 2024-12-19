@@ -10,7 +10,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Menu;
 import javafx.scene.control.ToolBar;
 import java.io.File;
 import java.io.IOException;
@@ -22,16 +21,16 @@ import shapes.*;
 import editors.Editor;
 import javafx.scene.control.ToggleButton;
 
-public class MenuController {
+public class MainController {
 
   @FXML private BorderPane borderPane;
   @FXML private Canvas canvas;
   @FXML private ToolBar toolBar;
   @FXML private ColorPicker colorPicker;
   @FXML private ChoiceBox<Integer> choiceWidth;
-  @FXML private Menu savers;
-  @FXML private BorderPane canvasPain;
   @FXML private ToggleButton fillButton;
+
+  private Editor editor;
 
   @FXML
   private void exit() {
@@ -47,7 +46,7 @@ public class MenuController {
     "bidirectedLine", BiDirectedLine.class
   );
 
-  private final Map<String, Pair<TriConsumer<File, Stage, Canvas>,TriConsumer<File, Stage, Canvas>>> extensions = Map.of(
+  private final Map<String, Pair<TriConsumer<File, Stage, Editor>,TriConsumer<File, Stage, Editor>>> extensions = Map.of(
     "json", new Pair<>(FileSaver::jsonSave, FileSaver::jsonOpen),
     "png", new Pair<>(FileSaver::pngSave, FileSaver::pngOpen)
   );
@@ -57,7 +56,7 @@ public class MenuController {
   @FXML
   private void changeWidth(final ActionEvent event) {
     final var width = choiceWidth.getValue();
-    Editor.getInstance().changeWidth(width);
+    editor.changeWidth(width);
   }
 
   @FXML
@@ -65,13 +64,13 @@ public class MenuController {
     final var selected = fillButton.isSelected();
     final var text = selected ? "Fill" : "No fill";
     fillButton.setText(text);
-    Editor.getInstance().setFill(selected);
+    editor.setFill(selected);
   }
 
   @FXML
   private void changeColor(final ActionEvent event) {
     final var color = colorPicker.getValue();
-    Editor.getInstance().changeColor(color);
+    editor.changeColor(color);
   }
 
   private List<FileChooser.ExtensionFilter> getExtentionFilters() {
@@ -95,7 +94,7 @@ public class MenuController {
     final var extention = FileSaver.extention(file.getName());
     if (!extensions.containsKey(extention)) return;
     final var saver = extensions.get(extention).getKey();
-    saver.accept(file, stage, canvas);
+    saver.accept(file, stage, editor);
   }
 
   @FXML
@@ -109,16 +108,14 @@ public class MenuController {
     final var extention = FileSaver.extention(file.getName());
     if (!extensions.containsKey(extention)) return;
     final var opener = extensions.get(extention).getValue();
-    opener.accept(file, stage, canvas);
+    opener.accept(file, stage, editor);
   }
 
   @FXML
   private void initialize() {
-    final var editor = Editor.getInstance().start(canvas, borderPane);
+    this.editor = new Editor(canvas);
     choiceWidth.getItems().addAll(widths);
     choiceWidth.setValue(widths.get(0));
-    canvas.widthProperty().bind(canvasPain.widthProperty());
-    canvas.heightProperty().bind(canvasPain.heightProperty());
     final var items = toolBar.getItems();
     for (final var pair: shapes.entrySet()) {
       final var name = pair.getKey();
