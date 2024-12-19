@@ -119,7 +119,9 @@
       </top>
       <center>
         <BorderPane fx:id="canvasPain">
-          <Canvas fx:id="canvas"  />
+          <center>
+            <Canvas fx:id="canvas"  />
+          </center>
         </BorderPane>
       </center>
     </BorderPane>
