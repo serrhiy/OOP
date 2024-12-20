@@ -129,7 +129,7 @@ public class MainController {
       canvas.setHeight(canvasHeight);
       heightField.setText(String.valueOf(canvasHeight));
     });
-    this.editor = new Editor(canvas);
+    this.editor = new Editor(canvas, borderPane);
     choiceWidth.getItems().addAll(widths);
     choiceWidth.setValue(widths.get(0));
     final var items = toolBar.getItems();

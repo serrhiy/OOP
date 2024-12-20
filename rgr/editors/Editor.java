@@ -7,6 +7,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import shapes.Shape;
@@ -25,12 +26,12 @@ public class Editor {
   private Image background = null;
   private boolean fill = false;
 
-  public Editor(final Canvas canvas) {
+  public Editor(final Canvas canvas, final Pane root) {
     this.canvas = canvas;
     this.context = canvas.getGraphicsContext2D();
     canvas.widthProperty().addListener((_) -> redraw());
     canvas.heightProperty().addListener((_) -> redraw());
-    canvas.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
+    root.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
       final var isCtrl = event.isControlDown();
       final var isZ = event.getCode().equals(KeyCode.Z);
       if (!(isCtrl && isZ) || shapes.isEmpty()) return;
@@ -38,7 +39,7 @@ public class Editor {
       if (selected.contains(shape)) selected.remove(shape);
       redraw();
     });
-    canvas.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
+    root.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
       if (!event.getCode().equals(KeyCode.DELETE)) return;
       for (final var shape: selected) shapes.remove(shape);
       selected.clear();
@@ -46,7 +47,7 @@ public class Editor {
     });
     canvas.addEventFilter(MouseEvent.MOUSE_PRESSED, (event) -> {
       if (isPrimaryButton(event)) {
-        if (selected.size() != 0) return; 
+        if (selected.size() == 0) return; 
         selected.clear();
         redraw();
       }
