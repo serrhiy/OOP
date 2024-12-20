@@ -12,6 +12,7 @@ import editors.Editor;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.util.Pair;
 import shapes.ShapeParser;
 
 public class FileSaver {
@@ -32,7 +33,7 @@ public class FileSaver {
     }
   }
 
-  public static void jsonOpen(final File file, final Editor editor) {
+  public static Pair<Double, Double> jsonOpen(final File file, final Editor editor) {
     try {
       final var bytes = Files.readAllBytes(file.toPath());
       final var text = new String(bytes);
@@ -46,8 +47,10 @@ public class FileSaver {
       canvas.setWidth(width);
       canvas.setHeight(height);
       editor.replace(newshapes);
+      return new Pair<Double, Double>(width, height);
     } catch (final Exception exception) {
       exception.printStackTrace();
+      return new Pair<Double, Double>(0.0, 0.0);
     }
   }
 
@@ -65,13 +68,15 @@ public class FileSaver {
     }
   }
 
-  public static void pngOpen(final File file, final Editor editor) {
+  public static Pair<Double, Double> pngOpen(final File file, final Editor editor) {
     try {
       final var stream = new FileInputStream(file);
       final var image = new Image(stream);
       editor.restore().setBacground(image);
+      return new Pair<Double, Double>(image.getWidth(), image.getHeight());
     } catch (final IOException exception) {
       exception.printStackTrace();
+      return new Pair<Double, Double>(0.0, 0.0);
     }
   }
 

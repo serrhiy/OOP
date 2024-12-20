@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -61,7 +62,7 @@ public class MainController {
     "bidirectedLine", BiDirectedLine.class
   );
 
-  private final Map<String, Pair<BiConsumer<File, Editor>, BiConsumer<File, Editor>>> extensions = Map.of(
+  private final Map<String, Pair<BiConsumer<File, Editor>, BiFunction<File, Editor, Pair<Double, Double>>>> extensions = Map.of(
     "json", new Pair<>(FileSaver::jsonSave, FileSaver::jsonOpen),
     "png", new Pair<>(FileSaver::pngSave, FileSaver::pngOpen)
   );
@@ -130,7 +131,9 @@ public class MainController {
     scrollPane.widthProperty().removeListener(widthListener);
     scrollPane.heightProperty().removeListener(heightListener);
     final var opener = extensions.get(extention).getValue();
-    opener.accept(file, editor);
+    final var size = opener.apply(file, editor);
+    widthField.setText(String.valueOf(size.getKey()));
+    heightField.setText(String.valueOf(size.getValue()));
   }
 
   @FXML
