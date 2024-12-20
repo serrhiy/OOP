@@ -28,8 +28,6 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ScrollPane;
 
 public class MainController {
-  private final int canvasDefaultWidth = 800;
-  private final int canvasDefaultHeight = 600;
   @FXML private BorderPane borderPane;
   @FXML private Canvas canvas;
   @FXML private ToolBar toolBar;
@@ -72,6 +70,16 @@ public class MainController {
   @FXML
   private void exit() {
     Platform.exit();
+  }
+
+  public void setCanvasSize(final int width, final int height, final boolean fixed) {
+    canvas.setWidth(width);
+    canvas.setHeight(height);
+    heightField.setText(Integer.toString(height));
+    widthField.setText(Integer.toString(width));
+    if (!fixed) return;
+    scrollPane.widthProperty().removeListener(widthListener);
+    scrollPane.heightProperty().removeListener(heightListener);
   }
 
   @FXML
@@ -138,8 +146,6 @@ public class MainController {
 
   @FXML
   private void initialize() {
-    canvas.setWidth(canvasDefaultWidth);
-    canvas.setHeight(canvasDefaultHeight);
     scrollPane.widthProperty().addListener(widthListener);
     scrollPane.heightProperty().addListener(heightListener);
     this.editor = new Editor(canvas, borderPane);

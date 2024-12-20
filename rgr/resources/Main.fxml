@@ -125,7 +125,7 @@
   <center>
     <ScrollPane fx:id="scrollPane" hbarPolicy="AS_NEEDED" minHeight="0" minWidth="0" style="-fx-focus-color: transparent; -fx-faint-focus-color: transparent;" vbarPolicy="AS_NEEDED" BorderPane.alignment="CENTER">
       <content>
-        <Canvas fx:id="canvas" />
+        <Canvas id="canvas" fx:id="canvas" />
       </content>
     </ScrollPane>
   </center>
