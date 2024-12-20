@@ -12,18 +12,18 @@ import editors.Editor;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
-import javafx.stage.Stage;
 import shapes.ShapeParser;
 
 public class FileSaver {
-  public static void jsonSave(final File file, final Stage stage, final Editor editor) {
+  public static void jsonSave(final File file, final Editor editor) {
     try (final var writer = new BufferedWriter(new FileWriter(file, false))) {
+      final var canvas = editor.getCanvas();
       final var shapes = editor.shapes();
       final var result = new JSONObject();
       final var window = new JSONObject();
       final var data = ShapeParser.serialise(shapes);
-      window.put("width", stage.getWidth());
-      window.put("height", stage.getHeight());
+      window.put("width", canvas.getWidth());
+      window.put("height", canvas.getHeight());
       result.put("window", window);
       result.put("shapes", data);
       writer.write(result.toString());
@@ -32,7 +32,7 @@ public class FileSaver {
     }
   }
 
-  public static void jsonOpen(final File file, final Stage stage, final Editor editor) {
+  public static void jsonOpen(final File file, final Editor editor) {
     try {
       final var bytes = Files.readAllBytes(file.toPath());
       final var text = new String(bytes);
@@ -42,15 +42,16 @@ public class FileSaver {
       final var width = window.getDouble("width");
       final var height = window.getDouble("height");
       final var newshapes = ShapeParser.parse(shapes);
-      stage.setWidth(width);
-      stage.setHeight(height);
+      final var canvas = editor.getCanvas();
+      canvas.setWidth(width);
+      canvas.setHeight(height);
       editor.replace(newshapes);
     } catch (final Exception exception) {
       exception.printStackTrace();
     }
   }
 
-  public static void pngSave(final File file, final Stage stage, final Editor editor) {
+  public static void pngSave(final File file, final Editor editor) {
     final var canvas = editor.getCanvas();
     final var width = (int)canvas.getWidth();
     final var height = (int)canvas.getHeight();
@@ -64,7 +65,7 @@ public class FileSaver {
     }
   }
 
-  public static void pngOpen(final File file, final Stage stage, final Editor editor) {
+  public static void pngOpen(final File file, final Editor editor) {
     try {
       final var stream = new FileInputStream(file);
       final var image = new Image(stream);

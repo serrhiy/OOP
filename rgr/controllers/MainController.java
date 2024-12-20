@@ -17,14 +17,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import shapes.*;
 import editors.Editor;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ScrollPane;
 
 public class MainController {
-
+  private final int canvasDefaultWidth = 800;
+  private final int canvasDefaultHeight = 600;
   @FXML private BorderPane borderPane;
   @FXML private Canvas canvas;
   @FXML private ToolBar toolBar;
@@ -37,11 +41,16 @@ public class MainController {
   @FXML private Text shapeField;
 
   private Editor editor;
-
-  @FXML
-  private void exit() {
-    Platform.exit();
-  }
+  private ChangeListener<? super Number> widthListener = (_, _, width) -> {
+    final var canvasWidth = width.intValue() - 2;
+    canvas.setWidth(canvasWidth);
+    widthField.setText(String.valueOf(canvasWidth));
+  };
+  private ChangeListener<? super Number> heightListener = (_, _, height) -> {
+    final var canvasHeight = height.intValue() - 2;
+    canvas.setHeight(canvasHeight);
+    heightField.setText(String.valueOf(canvasHeight));
+  };
 
   private final Map<String, Class<? extends Shape>> shapes = Map.of(
     "line", Line.class,
@@ -52,12 +61,17 @@ public class MainController {
     "bidirectedLine", BiDirectedLine.class
   );
 
-  private final Map<String, Pair<TriConsumer<File, Stage, Editor>,TriConsumer<File, Stage, Editor>>> extensions = Map.of(
+  private final Map<String, Pair<BiConsumer<File, Editor>, BiConsumer<File, Editor>>> extensions = Map.of(
     "json", new Pair<>(FileSaver::jsonSave, FileSaver::jsonOpen),
     "png", new Pair<>(FileSaver::pngSave, FileSaver::pngOpen)
   );
 
   private final List<Integer> widths = List.of(1, 2, 3, 4, 5, 6, 7, 8);
+
+  @FXML
+  private void exit() {
+    Platform.exit();
+  }
 
   @FXML
   private void changeWidth(final ActionEvent event) {
@@ -100,7 +114,7 @@ public class MainController {
     final var extention = FileSaver.extention(file.getName());
     if (!extensions.containsKey(extention)) return;
     final var saver = extensions.get(extention).getKey();
-    saver.accept(file, stage, editor);
+    saver.accept(file, editor);
   }
 
   @FXML
@@ -113,22 +127,18 @@ public class MainController {
     if (file == null) return;
     final var extention = FileSaver.extention(file.getName());
     if (!extensions.containsKey(extention)) return;
+    scrollPane.widthProperty().removeListener(widthListener);
+    scrollPane.heightProperty().removeListener(heightListener);
     final var opener = extensions.get(extention).getValue();
-    opener.accept(file, stage, editor);
+    opener.accept(file, editor);
   }
 
   @FXML
   private void initialize() {
-    scrollPane.widthProperty().addListener((_, _, width) -> {
-      final var canvasWidth = width.intValue() - 2;
-      canvas.setWidth(canvasWidth);
-      widthField.setText(String.valueOf(canvasWidth));
-    });
-    scrollPane.heightProperty().addListener((_, _, height) -> {
-      final var canvasHeight = height.intValue() - 2;
-      canvas.setHeight(canvasHeight);
-      heightField.setText(String.valueOf(canvasHeight));
-    });
+    canvas.setWidth(canvasDefaultWidth);
+    canvas.setHeight(canvasDefaultHeight);
+    scrollPane.widthProperty().addListener(widthListener);
+    scrollPane.heightProperty().addListener(heightListener);
     this.editor = new Editor(canvas, borderPane);
     choiceWidth.getItems().addAll(widths);
     choiceWidth.setValue(widths.get(0));

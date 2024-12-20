@@ -9,7 +9,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import shapes.Shape;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -106,18 +105,12 @@ public class Editor {
   }
 
   public void setBacground(final Image image) {
-    final var stage = (Stage)canvas.getScene().getWindow();
     final var imageWidth = image.getWidth();
     final var imageHeight = image.getHeight();
-    final var headerHeight = stage.getHeight() - canvas.getHeight();
-    final var stageHeight = imageHeight + headerHeight;
+    canvas.setWidth(imageWidth);
+    canvas.setHeight(imageHeight);
     this.background = image;
-    if (stage.getHeight() == stageHeight && stage.getWidth() == imageWidth) {
-      redraw();
-      return;
-    }
-    stage.setHeight(stageHeight);
-    stage.setWidth(imageWidth);
+    redraw();
   }
 
   public void newShape(final Class<? extends Shape> constructor) {
