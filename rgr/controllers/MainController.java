@@ -3,6 +3,7 @@ package controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -31,6 +32,9 @@ public class MainController {
   @FXML private ChoiceBox<Integer> choiceWidth;
   @FXML private ToggleButton fillButton;
   @FXML private ScrollPane scrollPane;
+  @FXML private Text widthField;
+  @FXML private Text heightField;
+  @FXML private Text shapeField;
 
   private Editor editor;
 
@@ -115,6 +119,16 @@ public class MainController {
 
   @FXML
   private void initialize() {
+    scrollPane.widthProperty().addListener((_, _, width) -> {
+      final var canvasWidth = width.intValue() - 2;
+      canvas.setWidth(canvasWidth);
+      widthField.setText(String.valueOf(canvasWidth));
+    });
+    scrollPane.heightProperty().addListener((_, _, height) -> {
+      final var canvasHeight = height.intValue() - 2;
+      canvas.setHeight(canvasHeight);
+      heightField.setText(String.valueOf(canvasHeight));
+    });
     this.editor = new Editor(canvas);
     choiceWidth.getItems().addAll(widths);
     choiceWidth.setValue(widths.get(0));
@@ -130,6 +144,7 @@ public class MainController {
       if (button == null) continue;
       button.setOnAction((_) -> {
         editor.newShape(Constructor);
+        shapeField.setText(name);
       });
     }
   }
