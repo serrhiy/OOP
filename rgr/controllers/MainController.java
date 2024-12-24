@@ -42,6 +42,7 @@ public class MainController {
   @FXML private Text widthField;
   @FXML private Text heightField;
   @FXML private Text shapeField;
+  private File background = null;
 
   private Editor editor;
   private ChangeListener<? super Number> widthListener = (_, _, width) -> {
@@ -82,7 +83,7 @@ public class MainController {
     try {
       final var view = "../resources/EnterCanvasSize.fxml";
       final var root = borderPane.getScene().getWindow();
-      final Parent gui = FXMLLoader.load(getClass().getResource(view));
+      final var gui = (Parent)FXMLLoader.load(getClass().getResource(view));
       final var scene = new Scene(gui);
       final var stage = new Stage();
       stage.setScene(scene);
@@ -136,6 +137,18 @@ public class MainController {
   }
 
   @FXML
+  private void save() throws IOException {
+    if (background == null) {
+      saveAs();
+      return;
+    }
+    final var extention = FileSaver.extention(background.getName());
+    if (!extensions.containsKey(extention)) return;
+    final var saver = extensions.get(extention).getKey();
+    saver.accept(background, editor);
+  }
+
+  @FXML
   private void saveAs() throws IOException {
     final var stage = (Stage)borderPane.getScene().getWindow();
     final var fileChooser = new FileChooser();
@@ -147,6 +160,7 @@ public class MainController {
     if (!extensions.containsKey(extention)) return;
     final var saver = extensions.get(extention).getKey();
     saver.accept(file, editor);
+    this.background = file;
   }
 
   @FXML
@@ -165,6 +179,7 @@ public class MainController {
     final var size = opener.apply(file, editor);
     widthField.setText(String.valueOf(size.getKey()));
     heightField.setText(String.valueOf(size.getValue()));
+    this.background = file;
   }
 
   @FXML
