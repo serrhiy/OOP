@@ -66,7 +66,8 @@ public class MainController {
 
   private final Map<String, Pair<BiConsumer<File, Editor>, BiFunction<File, Editor, Pair<Double, Double>>>> extensions = Map.of(
     "json", new Pair<>(FileSaver::jsonSave, FileSaver::jsonOpen),
-    "png", new Pair<>(FileSaver::pngSave, FileSaver::pngOpen)
+    "png", new Pair<>(FileSaver::pngSave, FileSaver::binaryOpen),
+    "jpg", new Pair<>(FileSaver::jpgSave, FileSaver::binaryOpen)
   );
 
   private final List<Integer> widths = List.of(1, 2, 3, 4, 5, 6, 7, 8);

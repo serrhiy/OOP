@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.util.Pair;
 import shapes.ShapeParser;
+import java.awt.image.BufferedImage;
 
 public class FileSaver {
   public static void jsonSave(final File file, final Editor editor) {
@@ -68,7 +69,7 @@ public class FileSaver {
     }
   }
 
-  public static Pair<Double, Double> pngOpen(final File file, final Editor editor) {
+  public static Pair<Double, Double> binaryOpen(final File file, final Editor editor) {
     try {
       final var stream = new FileInputStream(file);
       final var image = new Image(stream);
@@ -77,6 +78,21 @@ public class FileSaver {
     } catch (final IOException exception) {
       exception.printStackTrace();
       return new Pair<Double, Double>(0.0, 0.0);
+    }
+  }
+
+  public static void jpgSave(final File file, final Editor editor) {
+    final var canvas = editor.getCanvas();
+    final var width = (int)canvas.getWidth();
+    final var height = (int)canvas.getHeight();
+    final var writableImage = new WritableImage(width, height);
+    canvas.snapshot(null, writableImage);
+    final var awtImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    final var renderedImage = SwingFXUtils.fromFXImage(writableImage, awtImage);
+    try {
+      ImageIO.write(renderedImage, "jpg", file);
+    } catch (final IOException exception) {
+      exception.printStackTrace();
     }
   }
 
