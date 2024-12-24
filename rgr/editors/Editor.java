@@ -134,7 +134,6 @@ public class Editor {
         onRelease(shape);
         canvas.setOnMouseDragged(null);
         canvas.setOnMouseReleased(null);
-        canvas.setOnMousePressed(null);
       });
     } catch (Exception e) {
       e.printStackTrace();
