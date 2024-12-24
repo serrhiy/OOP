@@ -2,11 +2,15 @@ package controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -70,6 +74,24 @@ public class MainController {
   @FXML
   private void exit() {
     Platform.exit();
+  }
+
+  @FXML
+  private void create() {
+    try {
+      final var view = "../resources/EnterCanvasSize.fxml";
+      final var root = borderPane.getScene().getWindow();
+      final Parent gui = FXMLLoader.load(getClass().getResource(view));
+      final var scene = new Scene(gui);
+      final var stage = new Stage();
+      stage.setScene(scene);
+      stage.initOwner(root);
+      stage.initModality(Modality.WINDOW_MODAL);
+      stage.setTitle("Enter Canvas Size");
+      stage.show();
+    } catch (final Exception exception) {
+      exception.printStackTrace();
+    }
   }
 
   public void setCanvasSize(final int width, final int height, final boolean fixed) {
