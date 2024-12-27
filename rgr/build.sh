@@ -1,3 +1,0 @@
-javac --module-path=/home/serhii/programming/code/java/libs/javafx/lib:/home/serhii/programming/code/java/libs/javax/lib/ --add-modules=javafx.controls,javafx.fxml,javafx.swing,org.json Main.java controllers/MainController.java controllers/DialogController.java 
-java --module-path=/home/serhii/programming/code/java/libs/javafx/lib:/home/serhii/programming/code/java/libs/javax/lib/ --add-modules=javafx.controls,javafx.fxml,javafx.swing,org.json Main
-find . -name '*.class' -exec rm {} \;
